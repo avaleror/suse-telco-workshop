@@ -1,0 +1,10 @@
+# STUB. Do not apply this file.
+# rodeo does not apply manifests/. Lab 07 applies it on site-co-01 only.
+#
+# Target: one small VirtualMachine guest next to the site console pod.
+# Import the disk with CDI. Longhorn V2 backing images are not the import path.
+# KubeVirt 1.8.3, CDI 1.65.0.
+#
+# Guide language: Edge Virtualization.
+# Operator language: the VM is a VNF. It is one guest.
+# Harvester is out of scope.

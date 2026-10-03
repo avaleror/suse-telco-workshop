@@ -1,0 +1,61 @@
+# rodeo-plan.yaml: SUSE Telco Cloud 3.7 workshop.
+#
+# One plan. Bare metal is the default. AWS is `rodeo up --target aws`.
+# Whether that flag wins over deployment_target is not confirmed yet.
+# Do not add a second plan file until that check fails.
+#
+# rodeo does not apply manifests/. Students apply those files in the labs.
+# The suse-telco engine is not in this repo.
+
+name: suse-telco-rodeo
+type: suse-telco
+deployment_target: baremetal
+
+network:
+  # Planned lab network, same values as the lab pages.
+  # Subnet 192.168.125.0/24, bridge telco.
+  dns_domain: northline.telco
+
+rancher_tls:
+  source: secret
+
+credentials:
+  rancher_admin_password: "??rancher_admin_password"
+  scc_registration_code: "??scc_registration_code"
+
+# Block name stays alien_geeko in v1. The values are the Northline console.
+alien_geeko:
+  image: docker.io/avaleror/telco-site-console:latest
+  fleet_repo: https://github.com/avaleror/telco-site-console.git
+  fleet_branch: main
+  fleet_name: telco-site-console
+  fleet_namespace: fleet-default
+  target_labels:
+    demo: "true"
+    site-type: downstream
+
+# Pins from the 3.7 guide and telco-examples release-3.7 (e4ec0b0).
+# NeuVector is omitted. K3s is not a lab version.
+versions:
+  suse_telco_cloud: "3.7.0"
+  host_os: "SUSE Linux Micro 6.2"
+  rke2: "v1.36.3+rke2r1"
+  rancher_prime: "2.15.1"
+  rancher_prime_chart_repo: "https://charts.rancher.com/server-charts/prime"
+  turtles_chart: "307.0.8+up0.27.0"
+  turtles_image: "v0.27.1"
+  capi: "v1.13.3"
+  capm3: "v1.13.2"
+  rke2_bootstrap: "v0.25.0"
+  rke2_control_plane: "v0.25.0"
+  metal3_chart: "307.0.31+up0.16.0"
+  cert_manager: "1.20.1"
+  suse_storage: "1.12.1"
+  kubevirt: "1.8.3"
+  cdi: "1.65.0"
+  kubevirt_dashboard: "1.4.2"
+  edge_image_builder: "registry.suse.com/edge/3.7/edge-image-builder:1.3.4"
+  kiwi: "registry.suse.com/edge/3.7/kiwi-builder:10.2.29.1"
+  ironic_python_agent: "registry.suse.com/edge/3.7/ironic-python-agent:3.0.10"
+  cni: "cilium"
+  telco_examples_ref: "e4ec0b0a7349a635c1c5efd94bdefeaedbfa847c"

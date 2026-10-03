@@ -1,0 +1,20 @@
+# STUB. Do not apply this file.
+# rodeo does not apply manifests/. Lab 04 applies it by hand after the
+# tested objects replace these comments.
+#
+# Target: single-node downstream cluster site-co-01.
+# Source, once tested: telco-examples release-3.7 (e4ec0b0), DHCP tree,
+# SR-IOV charts removed.
+#
+# Keep:
+#   cloudProviderEnabled: false
+#   RKE2 v1.36.3+rke2r1
+#   Cilium
+#   cluster-api.cattle.io/rancher-auto-import: "true"
+#   one control-plane replica
+#   no worker pool
+#   Metal3DataTemplate present, networkData omitted
+#   no upstream IPAM resources
+#   BMC method redfish-virtualmedia
+#
+# Host: site-co on bridge telco, subnet 192.168.125.0/24.

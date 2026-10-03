@@ -1,0 +1,86 @@
+site_name: SUSE Telco Cloud 3.7
+site_description: Hands-on workshop, Rancher Prime, Cluster API, and Metal3 for Northline
+site_url: https://avaleror.github.io/suse-telco-workshop/
+repo_url: https://github.com/avaleror/suse-telco-workshop
+repo_name: avaleror/suse-telco-workshop
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  font:
+    text: SUSE
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+    - search.suggest
+    - search.highlight
+
+extra_css:
+  - stylesheets/suse.css
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Exercises:
+    - "01: Tour the region": exercises/01-environment-tour.md
+    - "02: Management stack": exercises/02-management-stack.md
+    - "03: Enroll site servers": exercises/03-enroll-hosts.md
+    - "04: First downstream cluster": exercises/04-first-downstream.md
+    - "05: Clusters at scale": exercises/05-clusters-at-scale.md
+    - "06: Site console": exercises/06-site-console.md
+    - "07: Edge Virtualization": exercises/07-edge-virtualization.md
+  - Reference:
+    - Lab overview: reference/lab-overview.md
+    - Quick reference: reference/quick-reference.md
+    - Product language: reference/product-language.md
+    - Bonus, not numbered: reference/bonus.md
+    - Full lab guide (print): lab-guide.md
+  - Instructor:
+    - Host setup: instructor/host-setup.md
+    - Pre-lab checklist: instructor/pre-lab-checklist.md

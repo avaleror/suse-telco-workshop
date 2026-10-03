@@ -1,0 +1,8 @@
+# STUB. Do not apply this file.
+# rodeo does not apply manifests/. Lab 05 applies it with the ClusterClass.
+#
+# Target: downstream cluster site-ran-01, one host (site-ran).
+# Same shape as site-co-01. No KubeVirt on this site.
+# Label cluster-api.cattle.io/rancher-auto-import: "true".
+#
+# Host: site-ran on bridge telco, subnet 192.168.125.0/24.

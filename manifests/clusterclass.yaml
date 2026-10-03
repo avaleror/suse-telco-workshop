@@ -1,0 +1,11 @@
+# STUB. Do not apply this file.
+# rodeo does not apply manifests/. Lab 05 applies it by hand after the
+# tested objects replace these comments.
+#
+# Target: one ClusterClass the operator can repeat.
+# Source, once tested: telco-examples clusterclass example on release-3.7
+# (e4ec0b0), with lab names and lab labels.
+# Use site-co-01 and site-ran-01. Do not copy the emea-spa cluster names.
+#
+# Two downstream clusters, one host each. No worker pool in v1.
+# Same pins as manifests/downstream-single.yaml.
