@@ -24,12 +24,12 @@ Rancher TLS is `rancher_tls.source: secret`, on a NodePort. The lab does not nee
 
 | File | Lab | Result |
 | --- | --- | --- |
-| `downstream-single.yaml` | 04 | `site-co-01` |
-| `clusterclass.yaml` | 05 | The repeatable shape |
-| `site-ran.yaml` | 05 | `site-ran-01` |
-| `kubevirt-vm.yaml` | 07 | One guest on `site-co-01` |
+| `downstream-single.yaml` | 04 | Downstream cluster `site-co-01` |
+| `clusterclass.yaml` | 05 | ClusterClass `example-clusterclass` |
+| `site-ran.yaml` | 05 | Downstream cluster `site-ran-01` |
+| `kubevirt-vm.yaml` | 07 | VirtualMachine `site-co-guest` on `site-co-01` |
 
-Those four files are stubs in this pass. The tested YAML comes from telco-examples `release-3.7` (`e4ec0b0`) after a live apply, with SR-IOV removed.
+Those files are the 3.7 objects from telco-examples `release-3.7` (`e4ec0b0`), with SR-IOV removed. `example-clusterclass` and `site-ran-01` live in namespace `northline`. `site-co-01` and `site-co-guest` use `default`.
 
 ## Hosts
 

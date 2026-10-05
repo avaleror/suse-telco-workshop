@@ -5,10 +5,7 @@
 
 ---
 
-!!! warning "Stub manifest"
-    `manifests/kubevirt-vm.yaml` is a comment stub. Do not apply it until it contains one real `VirtualMachine`.
-
-Do this on `site-co-01` only. `site-ran-01` stays without a guest.
+Do this on `site-co-01` only. `site-ran-01` stays without a guest. The guest in `manifests/kubevirt-vm.yaml` is VirtualMachine `site-co-guest`.
 
 Guide language: Edge Virtualization. The project is KubeVirt. Operator language: the VM is a VNF. It is one guest. Harvester is out of scope.
 
@@ -23,7 +20,7 @@ Chart names and the registry URL are in the [Edge Virtualization](https://docume
 
 `site-co` needs nested virt or the guest will not start. On AWS, a virtual EC2 size can fail this lab even when labs 01 through 06 passed. The metal size is the one to use when this lab has to pass. That size is not a tested pin yet.
 
-When the manifest is real:
+That file is the guest only. Apply it on `site-co-01` after the charts are in. CDI imports the disk from the registry source in the manifest. The file does not install KubeVirt or Harvester.
 
 ```bash
 kubectl apply -f manifests/kubevirt-vm.yaml
@@ -31,7 +28,7 @@ kubectl get vm,vmi
 kubectl get pods -A | grep -E 'virt|site-console|console'
 ```
 
-Open the console pod and the VM. Both should be running on `site-co-01`.
+Open the console pod and `site-co-guest`. Both should be running on `site-co-01`.
 
 ---
 

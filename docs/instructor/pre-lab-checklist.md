@@ -46,4 +46,4 @@ virsh dumpxml site-co | grep -i nested
 
 ## Hand-off
 
-Students start at lab 01. Manifests in this repo are still stubs, so labs 04, 05, and 07 stop at the warning until the tested YAML replaces the comments. Say that at the start of class if you are teaching from this commit.
+Students start at lab 01. Labs 04, 05, and 07 apply the YAML in `manifests/`: `site-co-01`, ClusterClass `example-clusterclass`, `site-ran-01`, and VirtualMachine `site-co-guest`.

@@ -8,6 +8,8 @@
 | Management VM | `mgmt` |
 | Site hosts | `site-co`, `site-ran` |
 | Downstream clusters | `site-co-01`, `site-ran-01` |
+| ClusterClass | `example-clusterclass` in namespace `northline` |
+| Guest VM | `site-co-guest` on `site-co-01` |
 | Bridge | `telco` |
 | Subnet | `192.168.125.0/24` |
 | DNS domain | `northline.telco` |
@@ -34,7 +36,7 @@ kubectl apply -f manifests/site-ran.yaml
 kubectl apply -f manifests/kubevirt-vm.yaml
 ```
 
-The apply commands wait on real manifests. The files in this repo are stubs.
+Apply the first three files on the management cluster. Apply `kubevirt-vm.yaml` on `site-co-01`.
 
 ## Tear-down
 

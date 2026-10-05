@@ -5,20 +5,17 @@
 
 ---
 
-!!! warning "Stub manifest"
-    `manifests/downstream-single.yaml` is still a comment stub. Do not apply it until the tested 3.7 objects replace those comments. The steps below are the lab procedure.
-
 This lab creates `site-co-01`, the central office. It is a downstream cluster, also called the runtime stack. One control-plane replica is enough. Leave workers out.
 
-The objects follow the SUSE Telco Cloud 3.7 Metal3 quickstart, taken from telco-examples `release-3.7` (`e4ec0b0`), DHCP tree, with SR-IOV charts removed. Keep `cloudProviderEnabled: false`, RKE2 `v1.36.3+rke2r1`, Cilium, and this label:
+`manifests/downstream-single.yaml` is the 3.7 Metal3 quickstart set from telco-examples `release-3.7` (`e4ec0b0`), DHCP tree, with SR-IOV charts removed. The file already sets `cloudProviderEnabled: false`, RKE2 `v1.36.3+rke2r1`, Cilium, and this label:
 
 ```yaml
 cluster-api.cattle.io/rancher-auto-import: "true"
 ```
 
-Copy the `Metal3DataTemplate` from that line and leave `networkData` off it. Do not add upstream IPAM resources.
+The `Metal3DataTemplate` carries `metaData` only. There is no `networkData` and no upstream IPAM. The control plane endpoint is `192.168.125.21`, and the machine template selects the host labeled `cluster-role: control-plane` and `site: site-co`.
 
-When the file is real, apply it from this repo and watch Turtles import the cluster:
+Apply it from this repo and watch Turtles import the cluster:
 
 ```bash
 kubectl apply -f manifests/downstream-single.yaml

@@ -48,6 +48,6 @@ mkdocs serve
 
 Open http://127.0.0.1:8000
 
-## Still a stub
+## Outside this repo
 
-`manifests/` is comments, not a tested Cluster API set. The console repo `avaleror/telco-site-console` is named in the plan and is not created here. The `suse-telco` engine belongs in rodeo-cli, not in this repo.
+`manifests/` is the student YAML for `site-co-01`, ClusterClass `example-clusterclass`, `site-ran-01`, and VirtualMachine `site-co-guest`. The console repo `avaleror/telco-site-console` is named in the plan and is not created here. The `suse-telco` engine belongs in rodeo-cli, not in this repo.

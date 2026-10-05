@@ -5,16 +5,15 @@
 
 ---
 
-!!! warning "Stub manifests"
-    `manifests/clusterclass.yaml` and `manifests/site-ran.yaml` are comment stubs. Do not apply them until the tested objects replace those comments.
-
-A second site is the same shape again. `ClusterClass` is how an operator repeats it. The lab names are `site-co-01` and `site-ran-01`, one host each.
+A second site is the same shape again. ClusterClass `example-clusterclass` in namespace `northline` is how an operator repeats it. `site-co-01` is already up from lab 04. This lab adds `site-ran-01`, one host.
 
 ```bash
 kubectl apply -f manifests/clusterclass.yaml
 kubectl apply -f manifests/site-ran.yaml
 kubectl get clusters -A
 ```
+
+`manifests/clusterclass.yaml` creates the namespace and `example-clusterclass`. `manifests/site-ran.yaml` creates `site-ran-01` from that class, one control-plane replica, RKE2 `v1.36.3+rke2r1`, the auto-import label, and endpoint `192.168.125.22`. The machine template selects `cluster-role: control-plane`, `deploy-region: northline`, and `cluster-type: site-ran`.
 
 Both clusters should show in the same Rancher. `site-ran-01` is the far-edge site. It does not get KubeVirt.
 
