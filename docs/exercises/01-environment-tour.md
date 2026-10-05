@@ -29,7 +29,11 @@ On the management cluster, read the versions against the [landing page table](..
 ssh root@MGMT_IP "kubectl get nodes -o wide && kubectl version"
 ```
 
-Then find the image cache on `mgmt`. The cache is filled before class so you are not waiting on an Edge Image Builder run. You want the 3.7 tags from the pin table: EIB `edge-image-builder:1.3.4` and Kiwi `kiwi-builder:10.2.29.1`.
+Then find the image cache on `mgmt`. It is nginx in namespace `imagecache`, serving `/opt/media` at `http://imagecache.local:8080`. It already holds `eibimage-downstream-cluster.raw` and its `.sha256`, built before class with Edge Image Builder `edge-image-builder:1.3.4`, so you are not waiting on a build.
+
+```bash
+ssh root@MGMT_IP "kubectl -n imagecache get pods && ls -lh /opt/media"
+```
 
 Open Rancher and confirm you are looking at one management cluster for the region. The downstream clusters are not there yet. You create those in labs 04 and 05.
 

@@ -46,6 +46,16 @@ Real Redfish hardware is a later track. The student YAML stays the telco-example
 
 Tear-down is `sudo rodeo clean --yes`.
 
+## Stage the SL Micro base image
+
+The `mgmt` VM and the downstream image both start from `SL-Micro.x86_64-6.2-Base-GM.raw.xz`. It is only on the SUSE Linux Micro download page, behind a SUSE login, so rodeo cannot fetch it for you. Download it once and copy it to the KVM host before `rodeo up`:
+
+```bash
+sudo cp SL-Micro.x86_64-6.2-Base-GM.raw.xz /var/lib/libvirt/images/
+```
+
+Or set `telco.base_image.url` in `rodeo-plan.yaml` to a location the host can fetch, and `telco.base_image.sha256` to have rodeo check it. The SCC registration code is needed too: Edge Image Builder uses it to install `jq` into the downstream image.
+
 ## Install rodeo-cli
 
 `install.sh` on `main` tracks main. Pin the tag this README names:
@@ -72,4 +82,4 @@ The SCC registration code comes from `??scc_registration_code`. SUSE Linux Micro
 
 ## After the first boot
 
-Raise the `mgmt` VM if Ironic or Rancher starve. The 8 vCPU and 16 GB figures are a start, not a measured pin. SUSE Storage stays if Ironic needs the volume. NeuVector stays out.
+Raise the `mgmt` VM if Ironic or Rancher starve. The 8 vCPU and 16 GB figures are a start, not a measured pin. SUSE Storage is not installed on `mgmt`: on a single node, Ironic's volume is an `emptyDir`, the Metal3 chart default. NeuVector stays out.

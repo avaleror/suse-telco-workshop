@@ -14,7 +14,13 @@ Confirm the SCC registration code is set. SUSE Linux Micro 6.2 builds ask for it
 
 ## Image cache
 
-On `mgmt`, the 3.7 image build output is already cached. Students must not be waiting on Edge Image Builder or Kiwi. The tags are in `rodeo-plan.yaml`: `edge-image-builder:1.3.4` and `kiwi-builder:10.2.29.1`.
+On `mgmt`, the downstream image is already in the cache. Students must not be waiting on Edge Image Builder (`edge-image-builder:1.3.4`, from `rodeo-plan.yaml`).
+
+```bash
+ssh root@MGMT_IP "ls -lh /opt/media && curl -sfI http://imagecache.local:8080/eibimage-downstream-cluster.raw"
+```
+
+Both `eibimage-downstream-cluster.raw` and `eibimage-downstream-cluster.raw.sha256` are there, and the `curl` returns `200`.
 
 ## Controller rollout
 
