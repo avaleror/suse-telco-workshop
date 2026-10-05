@@ -11,9 +11,9 @@ Guide language: Edge Virtualization. The project is KubeVirt. Operator language:
 
 Install the KubeVirt Helm charts from the SUSE registry, plus CDI, at the pins in `rodeo-plan.yaml`:
 
-- KubeVirt 1.8.3
-- CDI 1.65.0
-- dashboard extension 1.4.2
+- KubeVirt 1.8.3, chart `307.0.3+up0.8.0`
+- CDI 1.65.0, chart `307.0.3+up0.8.0`
+- dashboard extension 1.4.2, chart `307.0.5+up1.4.2`
 - SUSE Storage 1.12.1 if the node has no storage class
 
 Chart names and the registry URL are in the [Edge Virtualization](https://documentation.suse.com/suse-telco/3.7/html/telco/components-kubevirt.html) chapter. Use those. CDI imports the disk. Longhorn V2 backing images are not supported for this import.

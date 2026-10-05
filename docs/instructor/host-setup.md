@@ -12,17 +12,17 @@ SUSE Telco Cloud 3.7.0 support window, for your planning: full support ends 22 M
 | --- | --- |
 | Plan | `type: suse-telco`, `deployment_target: baremetal` |
 | AWS command | `rodeo up --target aws` from this same repo |
-| Network | Bridge `telco`, `192.168.125.0/24` |
+| Network | libvirt `default`, bridge `virbr0`, `192.168.122.0/24` |
 | VMs | `mgmt`, `site-co`, `site-ran` |
 | Host bar to start from | 64 GB RAM, 16 vCPU, 250 GB free under the image directory |
-| Rancher TLS | `source: secret`, NodePort, no public 80/443 |
+| Rancher TLS | `source: rancher` (self-signed), NodePort, no public 80/443 |
 | Secrets | `~/.rodeo/secrets.yaml` only |
 
 Correct the host bar after the first real run. The 32 GB metal3-demo host is a smaller stack. The edge workshop's 40 GB host is a different engine.
 
 `deployment_target: aws` on the instance raises disk floors and can use NVMe for images. Fleet workshop files, if any, keep `lab.target: baremetal`. Do not set `lab.target: aws`.
 
-Whether `rodeo up --target aws` overrides a committed `deployment_target: baremetal` is not confirmed. If the flag does not win, add a second plan file and stop.
+`rodeo up --target aws` overrides a committed `deployment_target: baremetal` and writes `aws` back into the local plan. One plan file is enough. The EC2 host is seeded from the copy bundled in rodeo-cli, which is kept identical to this repo's plan.
 
 ## AWS
 

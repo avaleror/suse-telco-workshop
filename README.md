@@ -37,7 +37,7 @@ rodeo up                  # bare metal host
 
 When the engine exists, `rodeo up` skips `rodeo init`, writes `~/.rodeo/secrets.yaml`, and stops when the site hosts are `available`. You apply `manifests/` yourself. rodeo does not apply that directory. If a later engine starts applying it, the same clusters would be created twice.
 
-AWS uses this same file: `rodeo up --target aws`. Whether that flag wins over `deployment_target: baremetal` is still an open check. Stay on one plan file until that check fails.
+AWS uses this same file: `rodeo up --target aws`. The flag wins over `deployment_target: baremetal`, and rodeo writes `aws` back into your local `rodeo-plan.yaml`. Do not commit that change. On AWS, rodeo seeds the EC2 host from the copy of this plan bundled in rodeo-cli, so the two files are kept identical.
 
 ## Local docs preview
 

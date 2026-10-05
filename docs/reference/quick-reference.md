@@ -10,8 +10,10 @@
 | Downstream clusters | `site-co-01`, `site-ran-01` |
 | ClusterClass | `example-clusterclass` in namespace `northline` |
 | Guest VM | `site-co-guest` on `site-co-01` |
-| Bridge | `telco` |
-| Subnet | `192.168.125.0/24` |
+| Network | libvirt `default`, bridge `virbr0` |
+| Subnet | `192.168.122.0/24` |
+| Host addresses | `mgmt` .10, `site-co` .21, `site-ran` .32 |
+| Cluster endpoints | `site-co-01` .21, `site-ran-01` .22 |
 | DNS domain | `northline.telco` |
 | Plan type | `suse-telco` |
 | Default target | `baremetal` |
@@ -57,7 +59,7 @@ sudo rodeo clean --yes
 | SUSE Telco Cloud | 3.7.0 |
 | RKE2 | `v1.36.3+rke2r1` |
 | Rancher Prime | 2.15.1 |
-| Turtles | `307.0.8+up0.27.0` |
+| Turtles providers chart | `307.0.8+up0.27.0` |
 | Metal3 chart | `307.0.31+up0.16.0` |
 | KubeVirt / CDI | 1.8.3 / 1.65.0 |
 | telco-examples | `e4ec0b0` on `release-3.7` |

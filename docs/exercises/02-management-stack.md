@@ -10,12 +10,12 @@
 In Rancher, and with kubectl on `mgmt`, find each of these:
 
 - Rancher Prime 2.15.1
-- Turtles, chart `307.0.8+up0.27.0`
+- Rancher Turtles `v0.27.1`, built into Rancher, plus the providers chart `307.0.8+up0.27.0`
 - Cluster API controller `v1.13.3`
 - The RKE2 bootstrap and control-plane providers, `v0.25.0`
 - CAPM3 `v1.13.2`
-- Metal3, chart `307.0.31+up0.16.0`
-- Ironic
+- Metal3, chart `307.0.31+up0.16.0`, with baremetal-operator 0.13.3
+- Ironic 38.0.0
 - cert-manager 1.20.1
 
 ```bash

@@ -13,7 +13,7 @@ This lab creates `site-co-01`, the central office. It is a downstream cluster, a
 cluster-api.cattle.io/rancher-auto-import: "true"
 ```
 
-The `Metal3DataTemplate` carries `metaData` only. There is no `networkData` and no upstream IPAM. The control plane endpoint is `192.168.125.21`, and the machine template selects the host labeled `cluster-role: control-plane` and `site: site-co`.
+The `Metal3DataTemplate` carries `metaData` only. There is no `networkData` and no upstream IPAM. The control plane endpoint is `192.168.122.21`, the address of `site-co` itself, and the machine template selects the host labeled `cluster-role: control-plane` and `site: site-co`.
 
 Apply it from this repo and watch Turtles import the cluster:
 

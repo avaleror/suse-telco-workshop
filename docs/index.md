@@ -30,11 +30,11 @@ The EC2 box, when you use AWS, is the KVM host rodeo rented. Metal3 did not crea
 <div class="topology">
 <pre>
 KVM host
-bridge telco, 192.168.125.0/24
+libvirt network default (virbr0), 192.168.122.0/24
 │
-├── mgmt       management cluster, image cache, Ironic
-├── site-co    host for site-co-01, nested virt for lab 07
-└── site-ran   host for site-ran-01
+├── mgmt       192.168.122.10  management cluster, image cache, Ironic
+├── site-co    192.168.122.21  host for site-co-01, nested virt for lab 07
+└── site-ran   192.168.122.32  host for site-ran-01 (cluster endpoint .22)
 </pre>
 </div>
 
@@ -46,7 +46,7 @@ bridge telco, 192.168.125.0/24
 
 `rodeo up` stops when those hosts are `available`. You apply the downstream `Cluster` yourself. rodeo does not apply `manifests/`.
 
-Addresses on `192.168.125.0/24` come from the host. The bridge name is `telco`. Read each address with `virsh domifaddr`.
+Each VM gets a fixed DHCP reservation on `192.168.122.0/24`, libvirt network `default`, bridge `virbr0`. Read each address with `virsh domifaddr`.
 
 ## Two ways to start
 
@@ -128,11 +128,12 @@ Times are writing targets, not a measured run.
 | Host OS | SUSE Linux Micro 6.2 (`SL-Micro` images) |
 | RKE2 | `v1.36.3+rke2r1` |
 | Rancher Prime | 2.15.1 |
-| Turtles chart | `307.0.8+up0.27.0` (image `v0.27.1`) |
+| Rancher Turtles | `v0.27.1`, built into Rancher |
+| Turtles providers chart | `307.0.8+up0.27.0` |
 | Cluster API | `v1.13.3` |
 | CAPM3 | `v1.13.2` |
 | RKE2 bootstrap and control plane | `v0.25.0` |
-| Metal3 chart | `307.0.31+up0.16.0` |
+| Metal3 chart | `307.0.31+up0.16.0` (Metal3 0.16.0, baremetal-operator 0.13.3, Ironic 38.0.0) |
 | cert-manager | 1.20.1 |
 | SUSE Storage | 1.12.1 |
 | KubeVirt / CDI / dashboard | 1.8.3 / 1.65.0 / 1.4.2 |

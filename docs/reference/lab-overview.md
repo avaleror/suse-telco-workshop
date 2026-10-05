@@ -8,7 +8,7 @@ Northline runs one management cluster for the region. Sites are downstream clust
 | site-co | Host for `site-co-01`. Nested virt so lab 07 can start a guest. | 4 vCPU, 8 GB |
 | site-ran | Host for `site-ran-01`. No KubeVirt. | 4 vCPU, 8 GB |
 
-One subnet, one bridge, on every lab page: `192.168.125.0/24`, bridge `telco`. VM addresses are whatever the host assigned on that subnet. Read them with `virsh domifaddr`. There is no node named `eib`.
+One subnet on every lab page: `192.168.122.0/24`, libvirt network `default`, bridge `virbr0`. Each VM has a fixed DHCP reservation: `mgmt` 192.168.122.10, `site-co` 192.168.122.21, `site-ran` 192.168.122.32. Read them with `virsh domifaddr`. There is no node named `eib`.
 
 ## What rodeo builds
 
@@ -16,7 +16,7 @@ One subnet, one bridge, on every lab page: `192.168.125.0/24`, bridge `telco`. V
 
 The management image is SUSE Linux Micro 6.2, RKE2 `v1.36.3+rke2r1`, Cilium, cert-manager, Metal3, Rancher Prime, `rancher-turtles-providers`, and SUSE Storage so Ironic has a volume. NeuVector is skipped. The image build uses Edge Image Builder and Kiwi at the 3.7 tags in `rodeo-plan.yaml`. Students do not wait on that build.
 
-Rancher TLS is `rancher_tls.source: secret`, on a NodePort. The lab does not need a public listener on port 80 or 443.
+Rancher TLS is `rancher_tls.source: rancher`, the self-signed certificate, on a NodePort. The lab does not need a public listener on port 80 or 443.
 
 ## What you apply
 

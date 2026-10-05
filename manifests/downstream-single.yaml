@@ -1,5 +1,6 @@
 # site-co-01. Source: telco-examples release-3.7 (e4ec0b0), DHCP single-node.
 # Quickstart objects. SR-IOV removed. One control plane. Metal3DataTemplate metaData only.
+# Image: the one downstream image rodeo builds for both sites (SL Micro 6.2 Base, no RT kernel).
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
@@ -31,7 +32,7 @@ metadata:
   namespace: default
 spec:
   controlPlaneEndpoint:
-    host: 192.168.125.21
+    host: 192.168.122.21
     port: 6443
   cloudProviderEnabled: false
 ---
@@ -105,10 +106,10 @@ spec:
           cluster-role: control-plane
           site: site-co
       image:
-        checksum: http://imagecache.local:8080/eibimage-slemicro-rt-telco.raw.sha256
+        checksum: http://imagecache.local:8080/eibimage-downstream-cluster.raw.sha256
         checksumType: sha256
         diskFormat: raw
-        url: http://imagecache.local:8080/eibimage-slemicro-rt-telco.raw
+        url: http://imagecache.local:8080/eibimage-downstream-cluster.raw
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
 kind: Metal3DataTemplate
