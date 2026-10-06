@@ -22,6 +22,8 @@ mkdocs.yml                  # MkDocs Material config
 
 ## Run the workshop
 
+`edition` in `rodeo-plan.yaml` picks the build: `product` (SUSE Linux Micro 6.2, Rancher Prime, the default) or `opensource` (openSUSE Leap Micro 6.2, community Rancher). Neither needs an SCC registration code. See [host setup](docs/instructor/host-setup.md).
+
 These are the commands once `type: suse-telco` exists in rodeo-cli:
 
 ```bash

@@ -125,9 +125,9 @@ Times are writing targets, not a measured run.
 | Piece | Pin |
 | --- | --- |
 | SUSE Telco Cloud | 3.7.0 |
-| Host OS | SUSE Linux Micro 6.2 (`SL-Micro` images) |
+| Host OS | SUSE Linux Micro 6.2 (`SL-Micro` images). Open source edition: openSUSE Leap Micro 6.2 |
 | RKE2 | `v1.36.3+rke2r1` |
-| Rancher Prime | 2.15.1 |
+| Rancher Prime | 2.15.1. Open source edition: Rancher 2.15.1 |
 | Rancher Turtles | `v0.27.1`, built into Rancher |
 | Turtles providers chart | `307.0.8+up0.27.0` |
 | Cluster API | `v1.13.3` |

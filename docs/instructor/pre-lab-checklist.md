@@ -7,10 +7,10 @@ Run this after `rodeo up` finishes and before students open lab 01. The `suse-te
 ```bash
 test -f ~/.rodeo/secrets.yaml && echo secrets file present
 # Passwords resolve from ?? keys. Nothing secret belongs in rodeo-plan.yaml.
-grep -E 'rancher_admin_password|scc_registration_code' ~/.rodeo/secrets.yaml >/dev/null
+grep -E 'rancher_admin_password|bmc_password|mgmt_root_password' ~/.rodeo/secrets.yaml >/dev/null
 ```
 
-Confirm the SCC registration code is set. SUSE Linux Micro 6.2 builds ask for it. AWS credentials, if you used `--target aws`, stay in `~/.aws/credentials` or the environment.
+No SCC registration code is needed. AWS credentials, if you used `--target aws`, stay in `~/.aws/credentials` or the environment.
 
 ## Image cache
 
@@ -32,7 +32,7 @@ ssh root@MGMT_IP "kubectl get pods -A"
 ssh root@MGMT_IP "kubectl get nodes"
 ```
 
-Rancher Prime should be 2.15.1. The node OS is SUSE Linux Micro 6.2, RKE2 `v1.36.3+rke2r1`.
+Rancher Prime (product) or Rancher (opensource) should be 2.15.1. The node OS is SUSE Linux Micro 6.2 (product) or openSUSE Leap Micro 6.2 (opensource), RKE2 `v1.36.3+rke2r1`.
 
 ## BareMetalHost available
 

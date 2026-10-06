@@ -14,7 +14,7 @@ One subnet on every lab page: `192.168.122.0/24`, libvirt network `default`, bri
 
 `rodeo up` builds the platform and stops when the `BareMetalHost` objects are `available`. That is the management cluster plus two site hosts.
 
-The management VM is SUSE Linux Micro 6.2 with RKE2 `v1.36.3+rke2r1`, Cilium, cert-manager, Rancher Prime, Metal3 and `rancher-turtles-providers`. Ironic keeps its data on an `emptyDir`, the single-node default, so SUSE Storage is not installed there. NeuVector is skipped. The downstream image is built with Edge Image Builder at the 3.7 tag in `rodeo-plan.yaml` and served from `http://imagecache.local:8080` on `mgmt`. Students do not wait on that build.
+The management VM is SUSE Linux Micro 6.2 (openSUSE Leap Micro 6.2 with `edition: opensource`, and community Rancher instead of Rancher Prime) with RKE2 `v1.36.3+rke2r1`, Cilium, cert-manager, Rancher Prime, Metal3 and `rancher-turtles-providers`. Ironic keeps its data on an `emptyDir`, the single-node default, so SUSE Storage is not installed there. NeuVector is skipped. The downstream image is built with Edge Image Builder at the 3.7 tag in `rodeo-plan.yaml` and served from `http://imagecache.local:8080` on `mgmt`. Students do not wait on that build.
 
 Rancher TLS is `rancher_tls.source: rancher`, the self-signed certificate, on a NodePort. The lab does not need a public listener on port 80 or 443.
 

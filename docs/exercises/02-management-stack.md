@@ -23,6 +23,9 @@ ssh root@MGMT_IP "kubectl get pods -A"
 ssh root@MGMT_IP "kubectl api-resources | grep -Ei 'cluster|metal3|baremetal|turtles|rke2'"
 ```
 
+!!! note "Open source edition"
+    With `edition: opensource` you see Rancher 2.15.1 from the community chart instead of Rancher Prime, and the node OS is openSUSE Leap Micro 6.2. Every other component and version on this page is the same.
+
 The management node is RKE2 `v1.36.3+rke2r1` on SUSE Linux Micro 6.2. Cilium is the CNI on that image. Ironic keeps its working data on an `emptyDir` volume, the Metal3 chart default for a single management node. SUSE Storage is not installed on `mgmt`.
 
 You should see the controllers the platform waits for: Cluster API, CAPM3, IPAM CRDs, the RKE2 providers, cert-manager, baremetal-operator, Ironic, and Turtles. IPAM CRDs can be present. This lab does not use upstream Metal3 IPAM objects.

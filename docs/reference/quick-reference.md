@@ -16,6 +16,7 @@
 | Cluster endpoints | `site-co-01` .21, `site-ran-01` .22 |
 | DNS domain | `northline.telco` |
 | Plan type | `suse-telco` |
+| Edition | `product` (default) or `opensource` |
 | Default target | `baremetal` |
 | Console NodePort | `30080` |
 | Fleet labels | `demo=true`, `site-type=downstream` |
@@ -64,4 +65,4 @@ sudo rodeo clean --yes
 | KubeVirt / CDI | 1.8.3 / 1.65.0 |
 | telco-examples | `e4ec0b0` on `release-3.7` |
 
-Password: `~/.rodeo/secrets.yaml` on the KVM host. SCC code stays in that file too.
+Password: `~/.rodeo/secrets.yaml` on the KVM host. No SCC code is needed; an optional one (product edition) goes in that file too.

@@ -46,7 +46,20 @@ Real Redfish hardware is a later track. The student YAML stays the telco-example
 
 Tear-down is `sudo rodeo clean --yes`.
 
-## Stage the SL Micro base image
+## Choose the edition
+
+`edition` in `rodeo-plan.yaml` decides what the lab is built from. The Telco Cloud 3.7 pins, the charts, the labs and the student YAML are the same in both.
+
+| | `product` (default) | `opensource` |
+| --- | --- | --- |
+| Host OS for `mgmt` and the sites | SUSE Linux Micro 6.2 | openSUSE Leap Micro 6.2 |
+| Rancher | Rancher Prime 2.15.1 | Rancher 2.15.1, community chart |
+| Base image | you stage it once (SUSE login) | rodeo downloads it, checksum pinned |
+| SCC registration code | optional | not used |
+
+Neither edition needs an SCC code. The only package added to the downstream image is `jq`, and Edge Image Builder installs it from a public repository: SLE BCI 16.0 for `product`, openSUSE Leap 16.0 for `opensource`. In `product`, an `scc_registration_code` in `~/.rodeo/secrets.yaml` (and uncommented in the plan) switches that to SUSE's own repositories.
+
+## Stage the SL Micro base image (product only)
 
 The `mgmt` VM and the downstream image both start from `SL-Micro.x86_64-6.2-Base-GM.raw.xz`. It is only on the SUSE Linux Micro download page, behind a SUSE login, so rodeo cannot fetch it for you. Download it once and copy it to the KVM host before `rodeo up`:
 
@@ -54,7 +67,7 @@ The `mgmt` VM and the downstream image both start from `SL-Micro.x86_64-6.2-Base
 sudo cp SL-Micro.x86_64-6.2-Base-GM.raw.xz /var/lib/libvirt/images/
 ```
 
-Or set `telco.base_image.url` in `rodeo-plan.yaml` to a location the host can fetch, and `telco.base_image.sha256` to have rodeo check it. The SCC registration code is needed too: Edge Image Builder uses it to install `jq` into the downstream image.
+Or set `telco.base_image.url` in `rodeo-plan.yaml` to a location the host can fetch, and `telco.base_image.sha256` to have rodeo check it. The `opensource` edition skips this step.
 
 ## Install rodeo-cli
 
@@ -75,8 +88,6 @@ rodeo up                  # bare metal
 ```
 
 Because this directory already has `rodeo-plan.yaml`, `rodeo up` is meant to skip `rodeo init`, write `~/.rodeo/secrets.yaml`, and wrap the deploy so a dropped SSH session does not kill it.
-
-The SCC registration code comes from `??scc_registration_code`. SUSE Linux Micro builds need it. Do not switch the student image to Leap Micro to avoid the code.
 
 `rodeo up` is done when both `BareMetalHost` objects are `available`. Students apply `manifests/` after that. rodeo does not apply that directory.
 
