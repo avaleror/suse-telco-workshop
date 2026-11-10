@@ -7,7 +7,9 @@ metadata:
   name: telco-site-console
   namespace: fleet-default
 spec:
-  repo: https://github.com/avaleror/telco-site-console.git
+  # Gitea on mgmt. rodeo copies github.com/avaleror/telco-site-console there
+  # at deploy time, so Fleet needs no internet during the lab.
+  repo: http://192.168.122.10:3000/gitea/telco-site-console.git
   branch: main
   targets:
     - clusterSelector:

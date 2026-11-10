@@ -33,7 +33,9 @@ ssh root@MGMT_IP "kubectl get gitrepo -n fleet-default"
 ssh root@MGMT_IP "kubectl get bundle -n fleet-default"
 ```
 
-The GitRepo points at `https://github.com/avaleror/telco-site-console.git`, the `fleet_repo` value in `rodeo-plan.yaml`. That repo is not published yet, and rodeo does not mirror it into Gitea on `mgmt` yet. Until both are done, the instructor swaps in a reachable repo with the same layout.
+The GitRepo points at Gitea on `mgmt`: `http://192.168.122.10:3000/gitea/telco-site-console.git`. rodeo copied `https://github.com/avaleror/telco-site-console.git`, the `fleet_repo` value in `rodeo-plan.yaml`, into that Gitea when it built the lab. Fleet never goes to GitHub. You can browse the repo at `http://192.168.122.10:3000/gitea/telco-site-console` from the KVM host.
+
+The console shows its own site name in the header. Rancher labels each Fleet cluster with its display name, and the repo's `fleet.yaml` passes that label to the chart.
 
 When the bundle is ready, open the console on node port `30080` of each site host: `192.168.122.21` for `site-co-01`, `192.168.122.32` for `site-ran-01`. `CLUSTER_NAME` in the console must match the cluster you are on. Check Bundle status, not only the NodePort. A console can answer on `30080` while the bundle is `NotReady`, for example when one image in the repo fails to pull. A LoadBalancer Service with no provider left a previous workshop Bundle `NotReady`. That Service stays out of the bundle.
 
