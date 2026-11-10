@@ -1,5 +1,13 @@
 # Northline ClusterClass. Source: telco-examples release-3.7 (e4ec0b0), clusterclass example.
 # Namespace northline. No worker pool.
+#
+# One change from upstream: upstream picks the control-plane Metal3MachineTemplate with a
+# patch on spec.machineTemplate.spec.infrastructureRef of the RKE2ControlPlaneTemplate.
+# CAPI v1.13 (Turtles providers 0.27) preserves that field during patching, so the patch is
+# dropped and the control plane points at a template that does not exist (CAPRKE2 then
+# panics). Here the class declares controlPlane.machineInfrastructure instead: CAPI clones
+# example-controlplane per cluster and sets the reference itself. The per-site part, the
+# BareMetalHost selector and the Metal3DataTemplate, comes in through patches.
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -12,7 +20,7 @@ metadata:
   namespace: northline
 spec:
   variables:
-  - name: controlPlaneMachineTemplate
+  - name: clusterType
     required: true
     schema:
       openAPIV3Schema:
@@ -39,19 +47,29 @@ spec:
       kind: RKE2ControlPlaneTemplate
       apiVersion: controlplane.cluster.x-k8s.io/v1beta2
       name: example-controlplane
+    machineInfrastructure:
+      templateRef:
+        kind: Metal3MachineTemplate
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+        name: example-controlplane
   patches:
-  - name: setControlPlaneMachineTemplate
+  - name: setControlPlaneHostSelector
     definitions:
     - selector:
-        apiVersion: controlplane.cluster.x-k8s.io/v1beta2
-        kind: RKE2ControlPlaneTemplate
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+        kind: Metal3MachineTemplate
         matchResources:
           controlPlane: true
       jsonPatches:
-      - op: replace
-        path: "/spec/template/spec/machineTemplate/spec/infrastructureRef/name"
+      - op: add
+        path: "/spec/template/spec/hostSelector/matchLabels/cluster-type"
         valueFrom:
-          variable: controlPlaneMachineTemplate
+          variable: clusterType
+      - op: add
+        path: "/spec/template/spec/dataTemplate"
+        valueFrom:
+          template: |
+            name: {{ .builtin.cluster.name }}
   - name: setControlPlaneEndpoint
     definitions:
     - selector:
@@ -240,6 +258,28 @@ spec:
           extraArgs:
           - provider-id=metal3://PROVIDERID
         nodeName: "localhost.localdomain"
+---
+# Control-plane machines for every cluster of this class. clusterType and the
+# Metal3DataTemplate name are patched in per cluster.
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+kind: Metal3MachineTemplate
+metadata:
+  name: example-controlplane
+  namespace: northline
+spec:
+  nodeReuse: true
+  template:
+    spec:
+      automatedCleaningMode: metadata
+      hostSelector:
+        matchLabels:
+          cluster-role: control-plane
+          deploy-region: northline
+      image:
+        checksum: http://imagecache.local:8080/eibimage-downstream-cluster.raw.sha256
+        checksumType: sha256
+        diskFormat: raw
+        url: http://imagecache.local:8080/eibimage-downstream-cluster.raw
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
 kind: Metal3ClusterTemplate

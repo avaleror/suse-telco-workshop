@@ -1,5 +1,7 @@
 # site-ran-01, one host. Source: telco-examples release-3.7 (e4ec0b0), clusterclass instance.
-# Same shape as example-clusterclass in namespace northline.
+# Same shape as example-clusterclass in namespace northline. The control-plane
+# Metal3MachineTemplate comes from the class (see clusterclass.yaml); this file
+# only picks the site type and supplies the cluster's Metal3DataTemplate.
 apiVersion: cluster.x-k8s.io/v1beta2
 kind: Cluster
 metadata:
@@ -16,37 +18,14 @@ spec:
     controlPlane:
       replicas: 1
     variables:
-    - name: controlPlaneMachineTemplate
-      value: site-ran-01-machinetemplate
+    - name: clusterType
+      value: site-ran
     - name: controlPlaneEndpointHost
       value: 192.168.122.22
     - name: tlsSan
       value:
       - 192.168.122.22
       - https://192.168.122.22.sslip.io
----
-apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
-kind: Metal3MachineTemplate
-metadata:
-  name: site-ran-01-machinetemplate
-  namespace: northline
-spec:
-  nodeReuse: true
-  template:
-    spec:
-      automatedCleaningMode: metadata
-      dataTemplate:
-        name: site-ran-01
-      hostSelector:
-        matchLabels:
-          cluster-role: control-plane
-          deploy-region: northline
-          cluster-type: site-ran
-      image:
-        checksum: http://imagecache.local:8080/eibimage-downstream-cluster.raw.sha256
-        checksumType: sha256
-        diskFormat: raw
-        url: http://imagecache.local:8080/eibimage-downstream-cluster.raw
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
 kind: Metal3DataTemplate
