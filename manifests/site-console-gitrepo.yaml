@@ -1,0 +1,16 @@
+# Lab 06: Fleet delivers the site console to every cluster labelled
+# demo=true and site-type=downstream. Apply on the management cluster.
+# Selectors inside the repo's fleet.yaml do not apply: these targets win.
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: telco-site-console
+  namespace: fleet-default
+spec:
+  repo: https://github.com/avaleror/telco-site-console.git
+  branch: main
+  targets:
+    - clusterSelector:
+        matchLabels:
+          demo: "true"
+          site-type: downstream

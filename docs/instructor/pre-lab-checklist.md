@@ -46,10 +46,14 @@ Two hosts, both `available`, BMC method `redfish-virtualmedia`, sushy-tools addr
 
 Lab 07 starts a KubeVirt guest inside `site-co`. That guest needs nested virt. `site-ran` does not.
 
+On the KVM host, nested virt must be on, and `site-co` must pass the host CPU through:
+
 ```bash
-virsh dumpxml site-co | grep -i nested
+cat /sys/module/kvm_intel/parameters/nested    # Y (kvm_amd on AMD hosts)
+virsh dumpxml site-co | grep "cpu mode"        # host-passthrough
+ssh root@192.168.122.21 ls /dev/kvm            # present inside site-co
 ```
 
 ## Hand-off
 
-Students start at lab 01. Labs 04, 05, and 07 apply the YAML in `manifests/`: `site-co-01`, ClusterClass `example-clusterclass`, `site-ran-01`, and VirtualMachine `site-co-guest`.
+Students start at lab 01. Labs 04 through 07 apply the YAML in `manifests/`: `site-co-01`, ClusterClass `example-clusterclass`, `site-ran-01`, GitRepo `telco-site-console`, and VirtualMachine `site-co-guest`.

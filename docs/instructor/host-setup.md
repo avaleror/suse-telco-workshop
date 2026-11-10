@@ -30,7 +30,7 @@ Correct the host bar after the first real run. The 32 GB metal3-demo host is a s
 
 Say this to the room: the EC2 box was rented by rodeo, and every server Metal3 touched was a libvirt guest with a fake Redfish BMC. There is no Cluster API Provider AWS in the Telco Cloud stack.
 
-Suggested sizes to try, not tested pins: `m8id.4xlarge` for labs 01 through 06. When lab 07 has to pass, use an EC2 metal size already in the rodeo catalog. `m7i.metal-24xl` is the pattern. Nested KubeVirt on a virtual EC2 instance is the risk. Do not publish either size as tested before that run.
+Tested size: `m8id.4xlarge` in `eu-north-1` ran labs 01 through 07 on 2026-11-10 with the `opensource` edition. Nested KubeVirt worked on that virtual instance: the lab 07 guest ran with KVM acceleration. No metal size is needed.
 
 Credentials stay in `~/.aws/credentials` or the environment. Do not put them in `rodeo-plan.yaml`.
 

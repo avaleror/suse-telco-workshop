@@ -79,9 +79,10 @@ kubectl get clusters -A
 
 ## Lab 6: Site console (20 min)
 
-Fleet GitRepo labels are `demo=true` and `site-type=downstream`. NodePort `30080`. The pod is an operations console. Operator language: CNF-side workload.
+Label both sites `demo=true` and `site-type=downstream`, then apply `manifests/site-console-gitrepo.yaml` on `mgmt`. NodePort `30080`. The pod is an operations console. Operator language: CNF-side workload.
 
 ```bash
+ssh root@MGMT_IP "kubectl get clusters.fleet.cattle.io -n fleet-default -L demo,site-type"
 ssh root@MGMT_IP "kubectl get gitrepo -n fleet-default"
 ssh root@MGMT_IP "kubectl get bundle -A"
 ```
@@ -90,7 +91,7 @@ Check Bundle status. `CLUSTER_NAME` matches `site-co-01` or `site-ran-01`.
 
 ## Lab 7: Edge Virtualization (40 min)
 
-On `site-co-01` only. KubeVirt 1.8.3 and CDI 1.65.0 (both chart `307.0.3+up0.8.0`), dashboard extension 1.4.2 (chart `307.0.5+up1.4.2`). Add SUSE Storage 1.12.1 if there is no storage class. Then apply VirtualMachine `site-co-guest`. CDI imports the disk. Guide language: Edge Virtualization. Operator language: the VM is a VNF.
+On `site-co-01` only. KubeVirt 1.8.3 and CDI 1.65.0 (both chart `307.0.3+up0.8.0`), dashboard extension 1.4.2 (chart `307.0.5+up1.4.2`). Install SUSE Storage 1.12.1 first, one replica, because a fresh site has no storage class. Then apply VirtualMachine `site-co-guest`. CDI imports the disk. Guide language: Edge Virtualization. Operator language: the VM is a VNF.
 
 ```bash
 kubectl apply -f manifests/kubevirt-vm.yaml
