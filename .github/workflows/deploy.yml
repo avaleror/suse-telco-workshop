@@ -1,13 +1,12 @@
 name: Deploy docs to GitHub Pages
 
-# Same job as the edge workshop: mkdocs gh-deploy.
-# Push stays off while this repo is private. This file does not change visibility.
-# Turn the push trigger on when the site should be visible.
+# Same job as the edge workshop: mkdocs gh-deploy to the gh-pages branch,
+# which GitHub Pages serves. Every push to main republishes the site.
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
