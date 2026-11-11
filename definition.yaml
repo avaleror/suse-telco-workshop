@@ -13,8 +13,9 @@
 #   site-ran   the one host of site-ran-01 (far edge, lab 05). No KubeVirt.
 #
 # Every guest gets CPU mode host-passthrough, so nested virt reaches all
-# site-co hosts. rodeo-plan.yaml (telco.sites) says which guests become
-# BareMetalHosts and with which labels.
+# site-co hosts. rodeo-cli's suse-telco profile (v0.28.0 and later) says which
+# guests become BareMetalHosts and with which labels; a plan can override it
+# with telco.sites.
 #
 # CPU and RAM are starting sizes, not a measured pin. Disk is a placeholder
 # until the first image boot.

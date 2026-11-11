@@ -24,17 +24,34 @@ virsh domifaddr site-ran
 
 `rodeo up` should already show `mgmt` running, with the four site hosts present as the machines Metal3 will enroll: three for `site-co-01` and one for `site-ran-01`. Read the Rancher URL from the success screen. The admin password is in `~/.rodeo/secrets.yaml` on the KVM host. Rancher uses its own self-signed certificate (`rancher_tls.source: rancher`), on a NodePort. You do not need a public listener on port 80 or 443.
 
-On the management cluster, read the versions against the [landing page table](../index.md):
+## Your shell on mgmt
+
+Every `kubectl` and `helm` command in labs 01 through 07 runs on the management VM, `mgmt`, as root. rodeo installed both there and gave root a kubeconfig for the management cluster, so there is nothing to configure.
+
+From the KVM host, as root (run `sudo -i` first if you logged in as another user):
 
 ```bash
-# Use the mgmt address from virsh domifaddr (192.168.122.10).
-ssh root@MGMT_IP "kubectl get nodes -o wide && kubectl version"
+ssh root@192.168.122.10
 ```
+
+Then fetch the workshop files on `mgmt` and work from that directory for the rest of the class:
+
+```bash
+curl -fsSL https://github.com/avaleror/suse-telco-workshop/archive/refs/heads/main.tar.gz | tar xz
+cd suse-telco-workshop-main
+kubectl get nodes -o wide
+kubectl version
+```
+
+`virsh` commands, like the ones above, run on the KVM host, not on `mgmt`. Keep a second terminal on the host for them.
+
+Read the versions from `kubectl version` against the [landing page table](../index.md).
 
 Then find the image cache on `mgmt`. It is nginx in namespace `imagecache`, serving `/opt/media` at `http://imagecache.local:8080`. It already holds `eibimage-downstream-cluster.raw` and its `.sha256`, built before class with Edge Image Builder `edge-image-builder:1.3.4`, so you are not waiting on a build.
 
 ```bash
-ssh root@MGMT_IP "kubectl -n imagecache get pods && ls -lh /opt/media"
+kubectl -n imagecache get pods
+ls -lh /opt/media
 ```
 
 Open Rancher and confirm you are looking at one management cluster for the region. The downstream clusters are not there yet. You create those in labs 04 and 05.

@@ -9,7 +9,15 @@ Do this on `site-co-01` only. `site-ran-01` stays without a guest. The guest in 
 
 Guide language: Edge Virtualization. The project is KubeVirt. Operator language: the VM is a VNF. It is one guest. Harvester is out of scope.
 
-Point `kubectl` and `helm` at `site-co-01` for every command in this lab, not at the management cluster.
+Every command in this lab goes to `site-co-01`, not to the management cluster. Cluster API keeps the cluster's kubeconfig in a Secret on `mgmt`. In your shell on `mgmt`, from the `suse-telco-workshop-main` directory, write it to a file and point `kubectl` and `helm` at it:
+
+```bash
+kubectl get secret -n default site-co-01-kubeconfig -o jsonpath='{.data.value}' | base64 -d > ~/site-co-01.kubeconfig
+export KUBECONFIG=~/site-co-01.kubeconfig
+kubectl get nodes
+```
+
+Three nodes, all `Ready`. The API address in that file is `https://192.168.122.20:6443`, the MetalLB address from lab 04. To go back to the management cluster, run `unset KUBECONFIG`.
 
 ## Storage is already there
 
