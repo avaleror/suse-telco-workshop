@@ -9,9 +9,11 @@ This is the print rollup of labs 01 through 07. The short pages under Exercises 
 
 Northline is a regional mobile network. One management cluster covers the region. Your job is to see two downstream clusters in Rancher Prime, then one pod and one KubeVirt guest on `site-co-01`.
 
-The KVM host is already up when class starts. Bridge `telco`, subnet `192.168.125.0/24`. VMs: `mgmt`, `site-co`, `site-ran`. The admin password is in `~/.rodeo/secrets.yaml`.
+This guide uses the product names (`edition: product`). With `edition: opensource` read Rancher for Rancher Prime and openSUSE Leap Micro 6.2 for SUSE Linux Micro 6.2; everything else is the same.
 
-`manifests/` in this commit is still a stub. Labs 04, 05, and 07 name the apply commands and tell you not to run them until the tested files replace the comments.
+The KVM host is already up when class starts. libvirt network `default`, bridge `virbr0`, subnet `192.168.122.0/24`. VMs: `mgmt` (.10), `site-co` (.21), `site-ran` (.32). The admin password is in `~/.rodeo/secrets.yaml`.
+
+`manifests/` is the student YAML, and rodeo does not apply it. Lab 04 applies `site-co-01`, lab 05 applies ClusterClass `example-clusterclass` and `site-ran-01`, and lab 07 applies VirtualMachine `site-co-guest` on `site-co-01`.
 
 Words: say downstream cluster or runtime stack. Say Edge Virtualization for the feature and KubeVirt for the project. When a sentence says CNF or VNF, it is operator language. The full list is [Product language](reference/product-language.md).
 
@@ -56,18 +58,18 @@ Both hosts are `available`. The BMC URL uses `redfish-virtualmedia`. A real serv
 
 ## Lab 4: First downstream cluster (40 min)
 
-Apply `manifests/downstream-single.yaml` for `site-co-01` only after the stub is replaced. Keep `cloudProviderEnabled: false`, RKE2 `v1.36.3+rke2r1`, Cilium, and `cluster-api.cattle.io/rancher-auto-import: "true"`. One control-plane replica. No workers. No `networkData` on `Metal3DataTemplate`.
+Apply `manifests/downstream-single.yaml` for `site-co-01`. The file sets `cloudProviderEnabled: false`, RKE2 `v1.36.3+rke2r1`, Cilium, and `cluster-api.cattle.io/rancher-auto-import: "true"`. One control-plane replica. No workers. No `networkData` on `Metal3DataTemplate`. Endpoint `192.168.122.21`, the `site-co` host itself. Host labels `cluster-role: control-plane` and `site: site-co`.
 
 ```bash
 kubectl apply -f manifests/downstream-single.yaml
 kubectl get clusters -A
 ```
 
-Watch Turtles import `site-co-01`.
+Watch Turtles import `site-co-01`. To start over, delete only the Cluster: `kubectl delete cluster -n default site-co-01`. Deleting the whole file hangs the RKE2 control plane deletion.
 
 ## Lab 5: Clusters at scale (30 min)
 
-Apply the ClusterClass and `site-ran-01` after those stubs are replaced. Both clusters show in one Rancher. The lab stops at two sites. The Rancher Manager 2.15 large row is the published ceiling to quote: 500 clusters and 5,000 nodes, at 16 vCPU and 64 GB per management node, under that page's assumptions.
+Apply ClusterClass `example-clusterclass` in namespace `northline`, then `site-ran-01`. One host, endpoint `192.168.122.22` (a MetalLB address, the host is .32), host labels `deploy-region: northline` and `cluster-type: site-ran`. Both clusters show in one Rancher. The lab stops at two sites. The Rancher Manager 2.15 large row is the published ceiling to quote: 500 clusters and 5,000 nodes, at 16 vCPU and 64 GB per management node, under that page's assumptions.
 
 ```bash
 kubectl apply -f manifests/clusterclass.yaml
@@ -75,11 +77,14 @@ kubectl apply -f manifests/site-ran.yaml
 kubectl get clusters -A
 ```
 
+Production RAN sites run the SUSE Linux Micro real-time image on tuned bare metal. This lab uses the standard image: the sites are nested VMs.
+
 ## Lab 6: Site console (20 min)
 
-Fleet GitRepo labels are `demo=true` and `site-type=downstream`. NodePort `30080`. The pod is an operations console. Operator language: CNF-side workload.
+Label both sites `demo=true` and `site-type=downstream`, then apply `manifests/site-console-gitrepo.yaml` on `mgmt`. NodePort `30080`. The pod is an operations console. Operator language: CNF-side workload.
 
 ```bash
+ssh root@MGMT_IP "kubectl get clusters.fleet.cattle.io -n fleet-default -L demo,site-type"
 ssh root@MGMT_IP "kubectl get gitrepo -n fleet-default"
 ssh root@MGMT_IP "kubectl get bundle -A"
 ```
@@ -88,7 +93,7 @@ Check Bundle status. `CLUSTER_NAME` matches `site-co-01` or `site-ran-01`.
 
 ## Lab 7: Edge Virtualization (40 min)
 
-On `site-co-01` only. KubeVirt 1.8.3, CDI 1.65.0, dashboard extension 1.4.2. Add SUSE Storage 1.12.1 if there is no storage class. CDI imports the disk. One guest. Guide language: Edge Virtualization. Operator language: the VM is a VNF.
+On `site-co-01` only. KubeVirt 1.8.3 and CDI 1.65.0 (both chart `307.0.3+up0.8.0`), dashboard extension 1.4.2 (chart `307.0.5+up1.4.2`). Install SUSE Storage 1.12.1 first, one replica, because a fresh site has no storage class. Then apply VirtualMachine `site-co-guest`. CDI imports the disk. Guide language: Edge Virtualization. Operator language: the VM is a VNF.
 
 ```bash
 kubectl apply -f manifests/kubevirt-vm.yaml

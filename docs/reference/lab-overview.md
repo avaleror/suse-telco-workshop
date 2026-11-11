@@ -8,15 +8,15 @@ Northline runs one management cluster for the region. Sites are downstream clust
 | site-co | Host for `site-co-01`. Nested virt so lab 07 can start a guest. | 4 vCPU, 8 GB |
 | site-ran | Host for `site-ran-01`. No KubeVirt. | 4 vCPU, 8 GB |
 
-One subnet, one bridge, on every lab page: `192.168.125.0/24`, bridge `telco`. VM addresses are whatever the host assigned on that subnet. Read them with `virsh domifaddr`. There is no node named `eib`.
+One subnet on every lab page: `192.168.122.0/24`, libvirt network `default`, bridge `virbr0`. Each VM has a fixed DHCP reservation: `mgmt` 192.168.122.10, `site-co` 192.168.122.21, `site-ran` 192.168.122.32. Read them with `virsh domifaddr`. There is no node named `eib`.
 
 ## What rodeo builds
 
 `rodeo up` builds the platform and stops when the `BareMetalHost` objects are `available`. That is the management cluster plus two site hosts.
 
-The management image is SUSE Linux Micro 6.2, RKE2 `v1.36.3+rke2r1`, Cilium, cert-manager, Metal3, Rancher Prime, `rancher-turtles-providers`, and SUSE Storage so Ironic has a volume. NeuVector is skipped. The image build uses Edge Image Builder and Kiwi at the 3.7 tags in `rodeo-plan.yaml`. Students do not wait on that build.
+The management VM is SUSE Linux Micro 6.2 (openSUSE Leap Micro 6.2 with `edition: opensource`, and community Rancher instead of Rancher Prime) with RKE2 `v1.36.3+rke2r1`, Cilium, cert-manager, Rancher Prime, Metal3 and `rancher-turtles-providers`. Ironic keeps its data on an `emptyDir`, the single-node default, so SUSE Storage is not installed there. NeuVector is skipped. The downstream image is built with Edge Image Builder at the 3.7 tag in `rodeo-plan.yaml` and served from `http://imagecache.local:8080` on `mgmt`. Students do not wait on that build.
 
-Rancher TLS is `rancher_tls.source: secret`, on a NodePort. The lab does not need a public listener on port 80 or 443.
+Rancher TLS is `rancher_tls.source: rancher`, the self-signed certificate, on a NodePort. The lab does not need a public listener on port 80 or 443.
 
 ## What you apply
 
@@ -24,12 +24,12 @@ Rancher TLS is `rancher_tls.source: secret`, on a NodePort. The lab does not nee
 
 | File | Lab | Result |
 | --- | --- | --- |
-| `downstream-single.yaml` | 04 | `site-co-01` |
-| `clusterclass.yaml` | 05 | The repeatable shape |
-| `site-ran.yaml` | 05 | `site-ran-01` |
-| `kubevirt-vm.yaml` | 07 | One guest on `site-co-01` |
+| `downstream-single.yaml` | 04 | Downstream cluster `site-co-01` |
+| `clusterclass.yaml` | 05 | ClusterClass `example-clusterclass` |
+| `site-ran.yaml` | 05 | Downstream cluster `site-ran-01` |
+| `kubevirt-vm.yaml` | 07 | VirtualMachine `site-co-guest` on `site-co-01` |
 
-Those four files are stubs in this pass. The tested YAML comes from telco-examples `release-3.7` (`e4ec0b0`) after a live apply, with SR-IOV removed.
+Those files are the 3.7 objects from telco-examples `release-3.7` (`e4ec0b0`), with SR-IOV removed. `example-clusterclass` and `site-ran-01` live in namespace `northline`. `site-co-01` and `site-co-guest` use `default`.
 
 ## Hosts
 

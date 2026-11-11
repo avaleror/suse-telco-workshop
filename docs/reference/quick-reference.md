@@ -8,10 +8,15 @@
 | Management VM | `mgmt` |
 | Site hosts | `site-co`, `site-ran` |
 | Downstream clusters | `site-co-01`, `site-ran-01` |
-| Bridge | `telco` |
-| Subnet | `192.168.125.0/24` |
+| ClusterClass | `example-clusterclass` in namespace `northline` |
+| Guest VM | `site-co-guest` on `site-co-01` |
+| Network | libvirt `default`, bridge `virbr0` |
+| Subnet | `192.168.122.0/24` |
+| Host addresses | `mgmt` .10, `site-co` .21, `site-ran` .32 |
+| Cluster endpoints | `site-co-01` .21, `site-ran-01` .22 |
 | DNS domain | `northline.telco` |
 | Plan type | `suse-telco` |
+| Edition | `product` (default) or `opensource` |
 | Default target | `baremetal` |
 | Console NodePort | `30080` |
 | Fleet labels | `demo=true`, `site-type=downstream` |
@@ -34,7 +39,7 @@ kubectl apply -f manifests/site-ran.yaml
 kubectl apply -f manifests/kubevirt-vm.yaml
 ```
 
-The apply commands wait on real manifests. The files in this repo are stubs.
+Apply the first three files on the management cluster. Apply `kubevirt-vm.yaml` on `site-co-01`.
 
 ## Tear-down
 
@@ -51,13 +56,13 @@ sudo rodeo clean --yes
 
 | Piece | Pin |
 | --- | --- |
-| rodeo-cli tag named in the README | `v0.19.0` (`cc12c84`) |
+| rodeo-cli tag named in the README | `v0.27.0` (`0da19e3`) |
 | SUSE Telco Cloud | 3.7.0 |
 | RKE2 | `v1.36.3+rke2r1` |
 | Rancher Prime | 2.15.1 |
-| Turtles | `307.0.8+up0.27.0` |
+| Turtles providers chart | `307.0.8+up0.27.0` |
 | Metal3 chart | `307.0.31+up0.16.0` |
 | KubeVirt / CDI | 1.8.3 / 1.65.0 |
 | telco-examples | `e4ec0b0` on `release-3.7` |
 
-Password: `~/.rodeo/secrets.yaml` on the KVM host. SCC code stays in that file too.
+Password: `~/.rodeo/secrets.yaml` on the KVM host. No SCC code is needed; an optional one (product edition) goes in that file too.

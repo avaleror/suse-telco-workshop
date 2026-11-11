@@ -6,7 +6,7 @@ Use these words on the student pages so the lab matches the SUSE Telco Cloud 3.7
 | --- | --- |
 | Downstream cluster, or runtime stack | The site cluster. The guide does not say "workload cluster". |
 | Management cluster, or management stack | The Rancher Prime cluster that owns the sites. |
-| Rancher Prime | The product. The bill of materials name is SUSE Rancher Prime 2.15.1. |
+| Rancher Prime | The product. The bill of materials name is SUSE Rancher Prime 2.15.1. The open source edition runs community Rancher 2.15.1. |
 | SUSE Linux Micro 6.2 | The host OS. ISO names use the `SL-Micro` prefix. The guide does not tell you to install a product named SLE Micro. |
 | Edge Virtualization | The feature. |
 | KubeVirt | The project, at 1.8.3 in this lab. |

@@ -1,8 +1,42 @@
-# STUB. Do not apply this file.
-# rodeo does not apply manifests/. Lab 05 applies it with the ClusterClass.
-#
-# Target: downstream cluster site-ran-01, one host (site-ran).
-# Same shape as site-co-01. No KubeVirt on this site.
-# Label cluster-api.cattle.io/rancher-auto-import: "true".
-#
-# Host: site-ran on bridge telco, subnet 192.168.125.0/24.
+# site-ran-01, one host. Source: telco-examples release-3.7 (e4ec0b0), clusterclass instance.
+# Same shape as example-clusterclass in namespace northline. The control-plane
+# Metal3MachineTemplate comes from the class (see clusterclass.yaml); this file
+# only picks the site type and supplies the cluster's Metal3DataTemplate.
+apiVersion: cluster.x-k8s.io/v1beta2
+kind: Cluster
+metadata:
+  name: site-ran-01
+  namespace: northline
+  labels:
+    cluster-api.cattle.io/rancher-auto-import: "true"
+spec:
+  topology:
+    classRef:
+      name: example-clusterclass
+      namespace: northline
+    version: v1.36.3+rke2r1
+    controlPlane:
+      replicas: 1
+    variables:
+    - name: clusterType
+      value: site-ran
+    - name: controlPlaneEndpointHost
+      value: 192.168.122.22
+    - name: tlsSan
+      value:
+      - 192.168.122.22
+      - https://192.168.122.22.sslip.io
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
+kind: Metal3DataTemplate
+metadata:
+  name: site-ran-01
+  namespace: northline
+spec:
+  clusterName: site-ran-01
+  metaData:
+    objectNames:
+    - key: name
+      object: machine
+    - key: local-hostname
+      object: machine

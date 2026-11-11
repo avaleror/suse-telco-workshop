@@ -16,7 +16,7 @@ Check three fields on each host:
 
 1. State is `available`.
 2. The BMC address is a `redfish-virtualmedia` URL. That method is the only supported BMC method in this stack.
-3. One host maps to `site-co`, the other to `site-ran`. Both sit on bridge `telco`, subnet `192.168.125.0/24`. The BMC is sushy-tools on the KVM host.
+3. One host maps to `site-co`, the other to `site-ran`. Both sit on libvirt network `default`, subnet `192.168.122.0/24`. The BMC is sushy-tools on the KVM host.
 
 A real server uses this same API. The BMC URL changes from sushy-tools to that server's Redfish virtual-media address. The student YAML stays the telco-examples shape. That hardware track is not this lab.
 

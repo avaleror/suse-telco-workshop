@@ -1,10 +1,50 @@
-# STUB. Do not apply this file.
-# rodeo does not apply manifests/. Lab 07 applies it on site-co-01 only.
-#
-# Target: one small VirtualMachine guest next to the site console pod.
-# Import the disk with CDI. Longhorn V2 backing images are not the import path.
-# KubeVirt 1.8.3, CDI 1.65.0.
-#
-# Guide language: Edge Virtualization.
-# Operator language: the VM is a VNF. It is one guest.
-# Harvester is out of scope.
+# One guest for lab 07. Apply this on site-co-01 after KubeVirt 1.8.3 and CDI 1.65.0 are installed.
+# Disk import is CDI (registry source). This file does not install the charts.
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: site-co-guest
+  namespace: default
+  labels:
+    northline.telco/cluster: site-co-01
+spec:
+  runStrategy: Always
+  dataVolumeTemplates:
+  - metadata:
+      name: site-co-guest-disk
+    spec:
+      source:
+        registry:
+          url: docker://quay.io/containerdisks/opensuse-tumbleweed:1.0.0
+      storage:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 4Gi
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: site-co-guest
+    spec:
+      domain:
+        devices:
+          disks:
+          - name: rootdisk
+            disk:
+              bus: virtio
+          - name: cloudinitdisk
+            disk:
+              bus: virtio
+        machine:
+          type: q35
+        memory:
+          guest: 1Gi
+        resources: {}
+      volumes:
+      - name: rootdisk
+        dataVolume:
+          name: site-co-guest-disk
+      - name: cloudinitdisk
+        cloudInitNoCloud:
+          userDataBase64: I2Nsb3VkLWNvbmZpZwpkaXNhYmxlX3Jvb3Q6IGZhbHNlCnNzaF9wd2F1dGg6IFRydWUKdXNlcnM6CiAgLSBkZWZhdWx0CiAgLSBuYW1lOiBzdXNlCiAgICBncm91cHM6IHN1ZG8KICAgIHNoZWxsOiAvYmluL2Jhc2gKICAgIHN1ZG86ICBBTEw9KEFMTCkgTk9QQVNTV0Q6QUxMCiAgICBsb2NrX3Bhc3N3ZDogRmFsc2UKICAgIHBsYWluX3RleHRfcGFzc3dkOiAnc3VzZScK

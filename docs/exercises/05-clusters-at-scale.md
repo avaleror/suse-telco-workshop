@@ -5,10 +5,7 @@
 
 ---
 
-!!! warning "Stub manifests"
-    `manifests/clusterclass.yaml` and `manifests/site-ran.yaml` are comment stubs. Do not apply them until the tested objects replace those comments.
-
-A second site is the same shape again. `ClusterClass` is how an operator repeats it. The lab names are `site-co-01` and `site-ran-01`, one host each.
+A second site is the same shape again. ClusterClass `example-clusterclass` in namespace `northline` is how an operator repeats it. `site-co-01` is already up from lab 04. This lab adds `site-ran-01`, one host.
 
 ```bash
 kubectl apply -f manifests/clusterclass.yaml
@@ -16,7 +13,12 @@ kubectl apply -f manifests/site-ran.yaml
 kubectl get clusters -A
 ```
 
+`manifests/clusterclass.yaml` creates the namespace and `example-clusterclass`. `manifests/site-ran.yaml` creates `site-ran-01` from that class, one control-plane replica, RKE2 `v1.36.3+rke2r1`, the auto-import label, and endpoint `192.168.122.22`. That endpoint is a MetalLB address on the new cluster, not the address of the `site-ran` host, which is `192.168.122.32`. The class owns the control-plane machine template. Cluster API clones it for each cluster and fills in the site type, so `site-ran-01` selects `cluster-role: control-plane`, `deploy-region: northline`, and `cluster-type: site-ran` from the variable `clusterType: site-ran`.
+
 Both clusters should show in the same Rancher. `site-ran-01` is the far-edge site. It does not get KubeVirt.
+
+!!! note "Real-time kernel"
+    In production, RAN sites run the SUSE Linux Micro real-time image on tuned bare metal. This lab uses the standard image for every site: the sites are nested VMs, so a real-time kernel would show nothing here.
 
 Scale, as this lab teaches it, is a replica count plus one `BareMetalHost` per machine. The lab stops at two sites.
 
