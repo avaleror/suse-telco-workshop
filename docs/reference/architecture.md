@@ -54,7 +54,7 @@ The whole lab runs on nested virtualization on one KVM host. rodeo builds five V
 <text class="a-tx" x="78" y="611">MetalLB · cert-manager</text><text class="a-ts" x="78" y="628">supporting charts</text>
 <path class="a-flow" d="M240,536 L240,528" marker-end="url(#arch-af)"/>
 <rect class="a-bmh" x="66" y="660" width="348" height="58" rx="7"/>
-<text class="a-tx" x="78" y="682">BareMetalHosts site-co, site-ran</text>
+<text class="a-tx" x="78" y="682">BareMetalHosts for the four site hosts</text>
 <text class="a-ts" x="78" y="700">registered by rodeo · available before lab 04</text>
 <text class="a-ts" x="66" y="750">No SUSE Storage on mgmt. Ironic keeps its data</text>
 <text class="a-ts" x="66" y="766">on an emptyDir, the single-node default.</text>
