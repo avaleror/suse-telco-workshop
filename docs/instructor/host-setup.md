@@ -11,8 +11,8 @@ SUSE Telco Cloud 3.7.0 support window, for your planning: full support ends 22 M
 | Plan | `type: suse-telco`, `deployment_target: baremetal` |
 | AWS command | `rodeo up --target aws` from this same repo |
 | Network | libvirt `default`, bridge `virbr0`, `192.168.122.0/24` |
-| VMs | `mgmt`, `site-co`, `site-ran` |
-| Hardware | x86_64 with VT-x or AMD-V and nested virt on, 16 threads, 64 GB RAM, 250 GB SSD or NVMe. Details: [Architecture and hardware](../reference/architecture.md#hardware-requirements) |
+| VMs | `mgmt`, `site-co`, `site-co-2`, `site-co-3`, `site-ran` (declared in `definition.yaml`) |
+| Hardware | x86_64 with VT-x or AMD-V and nested virt on, 24 threads, 64 GB RAM, 350 GB SSD or NVMe. Details: [Architecture and hardware](../reference/architecture.md#hardware-requirements) |
 | Rancher TLS | `source: rancher` (self-signed), NodePort, no public 80/443 |
 | Secrets | `~/.rodeo/secrets.yaml` only |
 
@@ -26,7 +26,7 @@ SUSE Telco Cloud 3.7.0 support window, for your planning: full support ends 22 M
 
 Say this to the room: the EC2 box was rented by rodeo, and every server Metal3 touched was a libvirt guest with a fake Redfish BMC. There is no Cluster API Provider AWS in the Telco Cloud stack.
 
-Tested size: `m8id.4xlarge` in `eu-north-1` ran labs 01 through 07 with both editions, `opensource` on 2026-11-10 and `product` on 2026-11-11. Nested KubeVirt worked on that virtual instance: the lab 07 guest ran with KVM acceleration. No metal size is needed.
+Tested size: `m8id.4xlarge` (16 threads, 64 GiB) in `eu-north-1` ran labs 01 through 07 with both editions, `opensource` on 2026-11-10 and `product` on 2026-11-11. The five-VM layout, with `site-co-01` on three hosts and SUSE Storage built in, passed on the same size on 2026-11-11 with the `product` edition. Nested KubeVirt worked on that virtual instance: the lab 07 guest ran with KVM acceleration. No metal size is needed.
 
 Credentials stay in `~/.aws/credentials` or the environment. Do not put them in `rodeo-plan.yaml`.
 

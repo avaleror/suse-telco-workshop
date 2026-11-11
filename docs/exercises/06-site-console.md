@@ -37,7 +37,7 @@ The GitRepo points at Gitea on `mgmt`: `http://192.168.122.10:3000/gitea/telco-s
 
 The console shows its own site name in the header. Rancher labels each Fleet cluster with its display name, and the repo's `fleet.yaml` passes that label to the chart.
 
-When the bundle is ready, open the console on node port `30080` of each site host: `192.168.122.21` for `site-co-01`, `192.168.122.32` for `site-ran-01`. `CLUSTER_NAME` in the console must match the cluster you are on. Check Bundle status, not only the NodePort. A console can answer on `30080` while the bundle is `NotReady`, for example when one image in the repo fails to pull. A LoadBalancer Service with no provider left a previous workshop Bundle `NotReady`. That Service stays out of the bundle.
+When the bundle is ready, open the console on node port `30080` of a host in each site: `192.168.122.21` (or `.23`, `.24`) for `site-co-01`, `192.168.122.32` for `site-ran-01`. `CLUSTER_NAME` in the console must match the cluster you are on. Check Bundle status, not only the NodePort. A console can answer on `30080` while the bundle is `NotReady`, for example when one image in the repo fails to pull. A LoadBalancer Service with no provider left a previous workshop Bundle `NotReady`. That Service stays out of the bundle.
 
 Live panels are cluster facts. Simulated rows stay labeled simulated.
 

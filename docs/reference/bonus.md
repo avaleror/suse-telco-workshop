@@ -2,7 +2,7 @@
 
 No student steps here. These are pointers for after labs 01 through 07.
 
-The numbered labs stay on Cluster API plus Metal3, one management cluster, emulated BMCs, two single-node downstream clusters, the site console, and one KubeVirt guest.
+The numbered labs stay on Cluster API plus Metal3, one management cluster, emulated BMCs, a three-node and a one-node downstream cluster, the site console, and one KubeVirt guest.
 
 [telco-examples](https://github.com/suse-edge/telco-cloud-examples/tree/release-3.7/telco-examples) on `release-3.7` (`e4ec0b0`) is the place to read:
 

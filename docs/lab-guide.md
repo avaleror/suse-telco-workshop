@@ -11,7 +11,7 @@ Northline is a regional mobile network. One management cluster covers the region
 
 This guide uses the product names (`edition: product`). With `edition: opensource` read Rancher for Rancher Prime and openSUSE Leap Micro 6.2 for SUSE Linux Micro 6.2; everything else is the same.
 
-The KVM host is already up when class starts. libvirt network `default`, bridge `virbr0`, subnet `192.168.122.0/24`. VMs: `mgmt` (.10), `site-co` (.21), `site-ran` (.32). The admin password is in `~/.rodeo/secrets.yaml`.
+The KVM host is already up when class starts. libvirt network `default`, bridge `virbr0`, subnet `192.168.122.0/24`. VMs: `mgmt` (.10), `site-co` (.21), `site-co-2` (.23), `site-co-3` (.24), `site-ran` (.32). The admin password is in `~/.rodeo/secrets.yaml`.
 
 `manifests/` is the student YAML, and rodeo does not apply it. Lab 04 applies `site-co-01`, lab 05 applies ClusterClass `example-clusterclass` and `site-ran-01`, and lab 07 applies VirtualMachine `site-co-guest` on `site-co-01`.
 
@@ -22,7 +22,7 @@ Words: say downstream cluster or runtime stack. Say Edge Virtualization for the 
 | VM | Role | Start size |
 | --- | --- | --- |
 | mgmt | Management cluster, image cache, Ironic, Gitea | 8 vCPU, 16 GB |
-| site-co | Host for `site-co-01`, nested virt | 4 vCPU, 8 GB |
+| site-co, site-co-2, site-co-3 | Hosts for `site-co-01`, nested virt | 4 vCPU, 8 GB each |
 | site-ran | Host for `site-ran-01` | 4 vCPU, 8 GB |
 
 AWS callout: EC2 is the KVM host rodeo rented. Metal3 did not create it. Bare metal callout: this machine is the KVM host, and the BMCs are still sushy-tools.
@@ -33,11 +33,13 @@ AWS callout: EC2 is the KVM host rodeo rented. Metal3 did not create it. Bare me
 virsh list --all
 virsh domifaddr mgmt
 virsh domifaddr site-co
+virsh domifaddr site-co-2
+virsh domifaddr site-co-3
 virsh domifaddr site-ran
 ssh root@MGMT_IP "kubectl get nodes -o wide && kubectl version"
 ```
 
-Find Rancher, the three guests, sushy, and the image cache. Read the versions on the landing page.
+Find Rancher, the five guests, sushy, and the image cache. Read the versions on the landing page.
 
 ## Lab 2: Management stack (20 min)
 
@@ -54,15 +56,16 @@ ssh root@MGMT_IP "kubectl api-resources | grep -Ei 'cluster|metal3|baremetal|tur
 ssh root@MGMT_IP "kubectl get baremetalhosts -A -o yaml"
 ```
 
-Both hosts are `available`. The BMC URL uses `redfish-virtualmedia`. A real server keeps the API and changes the address.
+All four hosts are `available`. The BMC URL uses `redfish-virtualmedia`. A real server keeps the API and changes the address.
 
 ## Lab 4: First downstream cluster (40 min)
 
-Apply `manifests/downstream-single.yaml` for `site-co-01`. The file sets `cloudProviderEnabled: false`, RKE2 `v1.36.3+rke2r1`, Cilium, and `cluster-api.cattle.io/rancher-auto-import: "true"`. One control-plane replica. No workers. No `networkData` on `Metal3DataTemplate`. Endpoint `192.168.122.21`, the `site-co` host itself. Host labels `cluster-role: control-plane` and `site: site-co`.
+Apply `manifests/site-co.yaml` for `site-co-01`. The file sets `cloudProviderEnabled: false`, RKE2 `v1.36.3+rke2r1`, Cilium, and `cluster-api.cattle.io/rancher-auto-import: "true"`. Three control-plane replicas, one per `site-co` host. No workers. No `networkData` on `Metal3DataTemplate`. Endpoint `192.168.122.20`, a MetalLB address. Host labels `cluster-role: control-plane` and `site: site-co`. Its `files` block ships MetalLB, endpoint-copier and SUSE Storage (three replicas) with the cluster.
 
 ```bash
-kubectl apply -f manifests/downstream-single.yaml
+kubectl apply -f manifests/site-co.yaml
 kubectl get clusters -A
+kubectl get machines -n default
 ```
 
 Watch Turtles import `site-co-01`. To start over, delete only the Cluster: `kubectl delete cluster -n default site-co-01`. Deleting the whole file hangs the RKE2 control plane deletion.
@@ -93,7 +96,7 @@ Check Bundle status. `CLUSTER_NAME` matches `site-co-01` or `site-ran-01`.
 
 ## Lab 7: Edge Virtualization (40 min)
 
-On `site-co-01` only. KubeVirt 1.8.3 and CDI 1.65.0 (both chart `307.0.3+up0.8.0`), dashboard extension 1.4.2 (chart `307.0.5+up1.4.2`). Install SUSE Storage 1.12.1 first, one replica, because a fresh site has no storage class. Then apply VirtualMachine `site-co-guest`. CDI imports the disk. Guide language: Edge Virtualization. Operator language: the VM is a VNF.
+On `site-co-01` only. KubeVirt 1.8.3 and CDI 1.65.0 (both chart `307.0.3+up0.8.0`), dashboard extension 1.4.2 (chart `307.0.5+up1.4.2`). SUSE Storage 1.12.1 is already the default class, three replicas, installed with the cluster in lab 4. Then apply VirtualMachine `site-co-guest`. CDI imports the disk. Guide language: Edge Virtualization. Operator language: the VM is a VNF.
 
 ```bash
 kubectl apply -f manifests/kubevirt-vm.yaml
