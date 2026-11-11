@@ -8,7 +8,7 @@ hide:
 The whole lab runs on nested virtualization on one KVM host. rodeo builds five VMs on that host and gives them a fake Redfish BMC, so Metal3 treats them as bare-metal servers. The lab 07 guest runs one level deeper, inside one of the three `site-co` hosts.
 
 <div class="arch">
-<svg viewBox="0 0 1200 830" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The KVM host runs libvirt, Edge Image Builder, a Redfish BMC and three VMs: mgmt, site-co and site-ran. A KubeVirt guest runs inside site-co.">
+<svg viewBox="0 0 1200 830" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The KVM host runs libvirt, Edge Image Builder, a Redfish BMC and five VMs: mgmt, three site-co hosts and site-ran. A KubeVirt guest runs inside the site-co-01 cluster.">
 <defs>
 <marker id="arch-af" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="a-mk-flow"/></marker>
 <marker id="arch-ac" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="a-mk-ctl"/></marker>

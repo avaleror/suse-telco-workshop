@@ -1,8 +1,8 @@
 # SUSE Telco Cloud 3.7 workshop
 
-Hands-on workshop for Northline, a regional mobile network. One management cluster runs Rancher Prime, Cluster API, and Metal3. You add two downstream clusters, then a site console and one KubeVirt guest.
+Hands-on workshop for Northline, a regional mobile network. One management cluster runs Rancher Prime, Cluster API, and Metal3. You add two downstream clusters, a three-node central office with SUSE Storage and a one-node far-edge site, then a site console and one KubeVirt guest.
 
-This repo is private. There is no public Pages URL yet. Preview locally with `mkdocs serve`. The Pages workflow is in the tree, and it does not change who can see the repo.
+The lab guide is published at https://avaleror.github.io/suse-telco-workshop/. Every push to `main` republishes it. Preview locally with `mkdocs serve`.
 
 ## Repo structure
 
@@ -10,14 +10,15 @@ This repo is private. There is no public Pages URL yet. Preview locally with `mk
 docs/
   index.md                  # Landing page
   exercises/                # Labs 01 through 07
-  reference/                # Overview, language, quick reference, bonus
+  reference/                # Architecture and hardware, overview, language, quick reference, bonus
   instructor/               # Host setup and pre-lab checklist
   lab-guide.md              # Print rollup of labs 01 through 07
 manifests/                  # Student YAML. rodeo does not apply this directory
 rodeo-plan.yaml             # Deployment plan for rodeo-cli
+definition.yaml             # The five lab VMs. rodeo reads it instead of its built-in topology
 mkdocs.yml                  # MkDocs Material config
 .github/workflows/
-  deploy.yml                # Pages workflow, push trigger off while private
+  deploy.yml                # Publishes the docs to GitHub Pages on every push to main
 ```
 
 ## Run the workshop
@@ -52,4 +53,4 @@ Open http://127.0.0.1:8000
 
 ## Outside this repo
 
-`manifests/` is the student YAML for `site-co-01`, ClusterClass `example-clusterclass`, `site-ran-01`, and VirtualMachine `site-co-guest`. The console repo `avaleror/telco-site-console` is named in the plan and is not created here. The `suse-telco` engine belongs in rodeo-cli, not in this repo.
+`manifests/` is the student YAML for `site-co-01`, ClusterClass `example-clusterclass`, `site-ran-01`, the site console GitRepo, and VirtualMachine `site-co-guest`. The console itself lives in its own repo, `avaleror/telco-site-console`, named in the plan. rodeo copies it into Gitea on `mgmt`, and Fleet deploys it from there. The `suse-telco` engine belongs in rodeo-cli, not in this repo.

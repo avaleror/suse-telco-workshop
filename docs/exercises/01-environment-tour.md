@@ -11,16 +11,18 @@
 !!! note "Bare metal"
     This machine is the KVM host. The BMCs are still sushy-tools. A later track points the same YAML at a server's Redfish virtual-media address.
 
-Get your bearings before you apply anything. The lab network is libvirt network `default`, bridge `virbr0`, subnet `192.168.122.0/24`. The VM names are `mgmt`, `site-co`, and `site-ran`.
+Get your bearings before you apply anything. The lab network is libvirt network `default`, bridge `virbr0`, subnet `192.168.122.0/24`. The VM names are `mgmt`, `site-co`, `site-co-2`, `site-co-3`, and `site-ran`.
 
 ```bash
 virsh list --all
 virsh domifaddr mgmt
 virsh domifaddr site-co
+virsh domifaddr site-co-2
+virsh domifaddr site-co-3
 virsh domifaddr site-ran
 ```
 
-`rodeo up` should already show `mgmt` running, with `site-co` and `site-ran` present as the hosts Metal3 will enroll. Read the Rancher URL from the success screen. The admin password is in `~/.rodeo/secrets.yaml` on the KVM host. Rancher uses its own self-signed certificate (`rancher_tls.source: rancher`), on a NodePort. You do not need a public listener on port 80 or 443.
+`rodeo up` should already show `mgmt` running, with the four site hosts present as the machines Metal3 will enroll: three for `site-co-01` and one for `site-ran-01`. Read the Rancher URL from the success screen. The admin password is in `~/.rodeo/secrets.yaml` on the KVM host. Rancher uses its own self-signed certificate (`rancher_tls.source: rancher`), on a NodePort. You do not need a public listener on port 80 or 443.
 
 On the management cluster, read the versions against the [landing page table](../index.md):
 
