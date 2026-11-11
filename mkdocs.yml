@@ -76,6 +76,7 @@ nav:
     - "06: Site console": exercises/06-site-console.md
     - "07: Edge Virtualization": exercises/07-edge-virtualization.md
   - Reference:
+    - Architecture and hardware: reference/architecture.md
     - Lab overview: reference/lab-overview.md
     - Quick reference: reference/quick-reference.md
     - Product language: reference/product-language.md

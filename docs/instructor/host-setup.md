@@ -12,11 +12,9 @@ SUSE Telco Cloud 3.7.0 support window, for your planning: full support ends 22 M
 | AWS command | `rodeo up --target aws` from this same repo |
 | Network | libvirt `default`, bridge `virbr0`, `192.168.122.0/24` |
 | VMs | `mgmt`, `site-co`, `site-ran` |
-| Host bar to start from | 64 GB RAM, 16 vCPU, 250 GB free under the image directory |
+| Hardware | x86_64 with VT-x or AMD-V and nested virt on, 16 threads, 64 GB RAM, 250 GB SSD or NVMe. Details: [Architecture and hardware](../reference/architecture.md#hardware-requirements) |
 | Rancher TLS | `source: rancher` (self-signed), NodePort, no public 80/443 |
 | Secrets | `~/.rodeo/secrets.yaml` only |
-
-Correct the host bar after the first real run. The 32 GB metal3-demo host is a smaller stack. The edge workshop's 40 GB host is a different engine.
 
 `deployment_target: aws` on the instance raises disk floors and can use NVMe for images. Fleet workshop files, if any, keep `lab.target: baremetal`. Do not set `lab.target: aws`.
 

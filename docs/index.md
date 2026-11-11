@@ -61,7 +61,7 @@ rodeo up                  # bare metal host
 # AWS: rodeo up --target aws
 ```
 
-`v0.27.0` (`0da19e3`) is the first rodeo-cli release with `type: suse-telco`. Details are in the [README](https://github.com/avaleror/suse-telco-workshop) and [host setup](instructor/host-setup.md).
+`v0.27.0` (`0da19e3`) is the first rodeo-cli release with `type: suse-telco`. Check the [hardware requirements](reference/architecture.md#hardware-requirements) first. Details are in the [README](https://github.com/avaleror/suse-telco-workshop) and [host setup](instructor/host-setup.md).
 
 ## Exercises
 

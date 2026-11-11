@@ -2,6 +2,8 @@
 
 Northline runs one management cluster for the region. Sites are downstream clusters. `site-co-01` is the central office. `site-ran-01` is the far-edge site.
 
+The diagram of how it all nests, and the hardware it needs, are in [Architecture and hardware](architecture.md).
+
 | VM | Role | Start size, not a measured pin |
 | --- | --- | --- |
 | mgmt | Management cluster, image cache, Ironic. Gitea for the Fleet mirror lives here. | 8 vCPU, 16 GB |

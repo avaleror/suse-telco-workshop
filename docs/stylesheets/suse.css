@@ -225,3 +225,45 @@
   border-color: var(--suse-green);
   color: var(--suse-green);
 }
+
+/* Architecture diagram (reference/architecture.md). Inline SVG, colors per theme. */
+.arch {
+  overflow-x: auto;
+  margin: 1.2rem 0;
+  --a-fg: #0C322C; --a-muted: #4A635E; --a-line: #9DB3AD; --a-line-soft: #C9D7D3;
+  --a-l0: #EDF3F1; --a-vm: #FFFFFF; --a-k8s: #F1F8F5; --a-item: #FFFFFF; --a-l2: #DDF7EC;
+  --a-green: #30BA78; --a-green-ink: #1E7D50; --a-warm: #E8652A; --a-warm-bg: #FFF1EA;
+  --a-badge: #0C322C; --a-badge-fg: #FFFFFF;
+}
+[data-md-color-scheme="slate"] .arch {
+  --a-fg: #E4F0EC; --a-muted: #9DB6B0; --a-line: #3E5A54; --a-line-soft: #2A403B;
+  --a-l0: #132C27; --a-vm: #17332D; --a-k8s: #1B3B34; --a-item: #1F433B; --a-l2: #164A37;
+  --a-green: #30BA78; --a-green-ink: #7FE0B0; --a-warm: #FE8A54; --a-warm-bg: #3A2418;
+  --a-badge: #90EBCD; --a-badge-fg: #0A1A17;
+}
+.arch svg { display: block; width: 100%; min-width: 900px; height: auto; }
+.arch .a-l0 { fill: var(--a-l0); stroke: var(--a-line); }
+.arch .a-vm { fill: var(--a-vm); stroke: var(--a-line); stroke-width: 1.5; }
+.arch .a-k8s { fill: var(--a-k8s); stroke: var(--a-green); stroke-width: 1.2; }
+.arch .a-item { fill: var(--a-item); stroke: var(--a-line-soft); }
+.arch .a-l2 { fill: var(--a-l2); stroke: var(--a-green); stroke-width: 2; }
+.arch .a-bmc { fill: var(--a-warm-bg); stroke: var(--a-warm); stroke-width: 1.5; }
+.arch .a-bmh { fill: none; stroke: var(--a-line); stroke-dasharray: 5 4; }
+.arch .a-net { stroke: var(--a-line); stroke-width: 4; stroke-linecap: round; }
+.arch .a-stub { stroke: var(--a-line); stroke-width: 2; }
+.arch .a-dot { fill: var(--a-line); }
+.arch .a-flow { fill: none; stroke: var(--a-green); stroke-width: 2.5; }
+.arch .a-ctl { fill: none; stroke: var(--a-warm); stroke-width: 2.5; stroke-dasharray: 7 5; }
+.arch .a-mk-flow { fill: var(--a-green); }
+.arch .a-mk-ctl { fill: var(--a-warm); }
+.arch text { font-family: "SUSE", system-ui, sans-serif; }
+.arch .a-tx { fill: var(--a-fg); font-size: 13.5px; font-weight: 600; }
+.arch .a-th { fill: var(--a-fg); font-size: 16px; font-weight: 700; }
+.arch .a-tl { fill: var(--a-fg); font-size: 14px; font-weight: 650; }
+.arch .a-ts { fill: var(--a-muted); font-size: 11.8px; }
+.arch .a-tm { fill: var(--a-muted); font-family: "JetBrains Mono", monospace; font-size: 11.5px; }
+.arch .a-tw { fill: var(--a-warm); font-size: 11.5px; font-weight: 600; }
+.arch .a-tg { fill: var(--a-green-ink); font-size: 11.5px; font-weight: 600; }
+.arch .a-chip, .arch .a-bd { fill: var(--a-badge); }
+.arch .a-chip-t { fill: var(--a-badge-fg); font-family: "JetBrains Mono", monospace; font-size: 11px; font-weight: 600; }
+.arch .a-bd-t { fill: var(--a-badge-fg); font-size: 12px; font-weight: 700; }
