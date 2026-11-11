@@ -11,27 +11,16 @@ Guide language: Edge Virtualization. The project is KubeVirt. Operator language:
 
 Point `kubectl` and `helm` at `site-co-01` for every command in this lab, not at the management cluster.
 
-## Storage first
+## Storage is already there
 
-The guest disk is a PersistentVolumeClaim, so `site-co-01` needs a storage class before CDI can import anything. A fresh site has none:
+The guest disk is a PersistentVolumeClaim, so `site-co-01` needs a storage class before CDI can import anything. SUSE Storage 1.12.1 (Longhorn) came with the cluster in lab 04: the `files` block in `manifests/site-co.yaml` installed it on first boot. Check it:
 
 ```bash
 kubectl get storageclass
+kubectl -n longhorn-system get nodes.longhorn.io
 ```
 
-Install SUSE Storage 1.12.1 (Longhorn). `site-co-01` has one node, so set one replica, or every volume stays degraded:
-
-```bash
-helm repo add longhorn https://charts.longhorn.io
-helm install longhorn longhorn/longhorn --version 1.12.1 \
-  -n longhorn-system --create-namespace \
-  --set persistence.defaultClassReplicaCount=1 \
-  --set defaultSettings.defaultReplicaCount=1 \
-  --wait --timeout 15m
-kubectl get storageclass
-```
-
-`longhorn` should be the default class. SUSE Storage needs `open-iscsi` and a running `iscsid` on the node. The site image rodeo builds already has both. If the Longhorn pods never get Ready, check `iscsid` on the `site-co` host first.
+`longhorn` is the default class, and all three nodes show in SUSE Storage. The class keeps three replicas of every volume, one per node, so a volume survives the loss of one host. SUSE Storage needs `open-iscsi` and a running `iscsid` on every node. The site image rodeo builds already has both. If the Longhorn pods never get Ready, check `iscsid` on the `site-co` hosts first.
 
 ## KubeVirt and CDI
 

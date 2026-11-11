@@ -33,7 +33,9 @@ KVM host
 libvirt network default (virbr0), 192.168.122.0/24
 │
 ├── mgmt       192.168.122.10  management cluster, image cache, Ironic
-├── site-co    192.168.122.21  host for site-co-01, nested virt for lab 07
+├── site-co    192.168.122.21  ┐
+├── site-co-2  192.168.122.23  ├ hosts for site-co-01 (cluster endpoint .20), nested virt for lab 07
+├── site-co-3  192.168.122.24  ┘
 └── site-ran   192.168.122.32  host for site-ran-01 (cluster endpoint .22)
 </pre>
 </div>
@@ -41,8 +43,8 @@ libvirt network default (virbr0), 192.168.122.0/24
 | VM | Role | Start size, not a measured pin |
 | --- | --- | --- |
 | mgmt | Management cluster, image cache, Ironic | 8 vCPU, 16 GB |
-| site-co | First downstream host, KubeVirt in lab 07 | 4 vCPU, 8 GB, nested virt |
-| site-ran | Second downstream host | 4 vCPU, 8 GB |
+| site-co, site-co-2, site-co-3 | The three hosts of `site-co-01`, KubeVirt in lab 07 | 4 vCPU, 8 GB each, nested virt |
+| site-ran | The host of `site-ran-01` | 4 vCPU, 8 GB |
 
 `rodeo up` stops when those hosts are `available`. You apply the downstream `Cluster` yourself. rodeo does not apply `manifests/`.
 
@@ -92,7 +94,7 @@ rodeo up                  # bare metal host
   <div class="ex-number">Exercise 04</div>
   <div class="ex-title">First downstream cluster</div>
   <div class="ex-time">40 min</div>
-  <div class="ex-desc">Apply the single-node manifest for site-co-01 and watch Turtles import it.</div>
+  <div class="ex-desc">Apply the three-node manifest for site-co-01 and watch Turtles import it.</div>
 </a>
 
 <a href="exercises/05-clusters-at-scale/" class="exercise-card">

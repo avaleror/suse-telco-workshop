@@ -40,18 +40,17 @@ Rancher Prime (product) or Rancher (opensource) should be 2.15.1. The node OS is
 ssh root@MGMT_IP "kubectl get baremetalhosts -A"
 ```
 
-Two hosts, both `available`, BMC method `redfish-virtualmedia`, sushy-tools addresses. One is `site-co`, one is `site-ran`.
+Four hosts, all `available`, BMC method `redfish-virtualmedia`, sushy-tools addresses: `site-co`, `site-co-2` and `site-co-3` in `default`, `site-ran` in `northline`.
 
-## Nested virt on site-co
+## Nested virt on the site-co hosts
 
-Lab 07 starts a KubeVirt guest inside `site-co`. That guest needs nested virt. `site-ran` does not.
+Lab 07 starts a KubeVirt guest on `site-co-01`, and it can land on any of its three hosts. That guest needs nested virt. `site-ran` does not.
 
-On the KVM host, nested virt must be on, and `site-co` must pass the host CPU through:
+On the KVM host, nested virt must be on, and the `site-co` hosts must pass the host CPU through:
 
 ```bash
 cat /sys/module/kvm_intel/parameters/nested    # Y (kvm_amd on AMD hosts)
-virsh dumpxml site-co | grep "cpu mode"        # host-passthrough
-ssh root@192.168.122.21 ls /dev/kvm            # present inside site-co
+for vm in site-co site-co-2 site-co-3; do virsh dumpxml $vm | grep "cpu mode"; done   # host-passthrough
 ```
 
 ## Hand-off

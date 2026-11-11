@@ -6,14 +6,14 @@
 | --- | --- |
 | Operator | Northline |
 | Management VM | `mgmt` |
-| Site hosts | `site-co`, `site-ran` |
+| Site hosts | `site-co`, `site-co-2`, `site-co-3`, `site-ran` |
 | Downstream clusters | `site-co-01`, `site-ran-01` |
 | ClusterClass | `example-clusterclass` in namespace `northline` |
 | Guest VM | `site-co-guest` on `site-co-01` |
 | Network | libvirt `default`, bridge `virbr0` |
 | Subnet | `192.168.122.0/24` |
-| Host addresses | `mgmt` .10, `site-co` .21, `site-ran` .32 |
-| Cluster endpoints | `site-co-01` .21, `site-ran-01` .22 |
+| Host addresses | `mgmt` .10, `site-co` .21, `site-co-2` .23, `site-co-3` .24, `site-ran` .32 |
+| Cluster endpoints | `site-co-01` .20, `site-ran-01` .22 (MetalLB) |
 | DNS domain | `northline.telco` |
 | Plan type | `suse-telco` |
 | Edition | `product` (default) or `opensource` |
@@ -33,7 +33,7 @@ rodeo doctor
 rodeo up
 rodeo up --target aws
 
-kubectl apply -f manifests/downstream-single.yaml
+kubectl apply -f manifests/site-co.yaml
 kubectl apply -f manifests/clusterclass.yaml
 kubectl apply -f manifests/site-ran.yaml
 kubectl apply -f manifests/kubevirt-vm.yaml

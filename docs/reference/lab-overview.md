@@ -7,14 +7,14 @@ The diagram of how it all nests, and the hardware it needs, are in [Architecture
 | VM | Role | Start size, not a measured pin |
 | --- | --- | --- |
 | mgmt | Management cluster, image cache, Ironic. Gitea for the Fleet mirror lives here. | 8 vCPU, 16 GB |
-| site-co | Host for `site-co-01`. Nested virt so lab 07 can start a guest. | 4 vCPU, 8 GB |
+| site-co, site-co-2, site-co-3 | The three hosts of `site-co-01`. Nested virt so lab 07 can start a guest. | 4 vCPU, 8 GB each |
 | site-ran | Host for `site-ran-01`. No KubeVirt. | 4 vCPU, 8 GB |
 
-One subnet on every lab page: `192.168.122.0/24`, libvirt network `default`, bridge `virbr0`. Each VM has a fixed DHCP reservation: `mgmt` 192.168.122.10, `site-co` 192.168.122.21, `site-ran` 192.168.122.32. Read them with `virsh domifaddr`. There is no node named `eib`.
+One subnet on every lab page: `192.168.122.0/24`, libvirt network `default`, bridge `virbr0`. Each VM has a fixed DHCP reservation: `mgmt` 192.168.122.10, `site-co` 192.168.122.21, `site-co-2` 192.168.122.23, `site-co-3` 192.168.122.24, `site-ran` 192.168.122.32. The cluster API addresses are MetalLB addresses: `site-co-01` on .20, `site-ran-01` on .22. Read them with `virsh domifaddr`. There is no node named `eib`.
 
 ## What rodeo builds
 
-`rodeo up` builds the platform and stops when the `BareMetalHost` objects are `available`. That is the management cluster plus two site hosts.
+`rodeo up` builds the platform and stops when the `BareMetalHost` objects are `available`. That is the management cluster plus four site hosts. The VMs are declared in `definition.yaml` in this repo, and `telco.sites` in `rodeo-plan.yaml` says which of them become BareMetalHosts.
 
 The management VM is SUSE Linux Micro 6.2 (openSUSE Leap Micro 6.2 with `edition: opensource`, and community Rancher instead of Rancher Prime) with RKE2 `v1.36.3+rke2r1`, Cilium, cert-manager, Rancher Prime, Metal3 and `rancher-turtles-providers`. Ironic keeps its data on an `emptyDir`, the single-node default, so SUSE Storage is not installed there. NeuVector is skipped. The downstream image is built with Edge Image Builder at the 3.7 tag in `rodeo-plan.yaml` and served from `http://imagecache.local:8080` on `mgmt`. Students do not wait on that build.
 
@@ -26,7 +26,7 @@ Rancher TLS is `rancher_tls.source: rancher`, the self-signed certificate, on a 
 
 | File | Lab | Result |
 | --- | --- | --- |
-| `downstream-single.yaml` | 04 | Downstream cluster `site-co-01` |
+| `site-co.yaml` | 04 | Downstream cluster `site-co-01`, three nodes, with SUSE Storage |
 | `clusterclass.yaml` | 05 | ClusterClass `example-clusterclass` |
 | `site-ran.yaml` | 05 | Downstream cluster `site-ran-01` |
 | `kubevirt-vm.yaml` | 07 | VirtualMachine `site-co-guest` on `site-co-01` |
