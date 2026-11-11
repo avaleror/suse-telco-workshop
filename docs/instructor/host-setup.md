@@ -2,8 +2,6 @@
 
 Northline is a regional mobile network, a telecom operator (CSP in the industry phrase). One management cluster covers the region. Students use the same labs 01 through 07 on AWS and on bare metal. You only change where the KVM host comes from.
 
-The `suse-telco` engine is not in rodeo-cli `v0.19.0`. Do not expect `rodeo up` to build this lab on that tag. The steps below are the setup once that engine is the one you are running.
-
 SUSE Telco Cloud 3.7.0 support window, for your planning: full support ends 22 March 2027, maintenance ends 22 March 2028, end of life 23 March 2028.
 
 ## Shared facts
@@ -76,10 +74,10 @@ On `--target aws` the copy does not work: rodeo creates the instance in the same
 `install.sh` on `main` tracks main. Pin the tag this README names:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.19.0
+curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.27.0
 ```
 
-`v0.19.0` is commit `cc12c84` (2 October 2026). Replace that ref only after a full lab run names the commit you actually tested.
+`v0.27.0` is commit `0da19e3` (11 November 2026), the first release with `type: suse-telco`. Replace that ref only after a full lab run names the commit you actually tested.
 
 ```bash
 git clone https://github.com/avaleror/suse-telco-workshop.git

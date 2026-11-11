@@ -56,7 +56,7 @@ sudo rodeo clean --yes
 
 | Piece | Pin |
 | --- | --- |
-| rodeo-cli tag named in the README | `v0.19.0` (`cc12c84`) |
+| rodeo-cli tag named in the README | `v0.27.0` (`0da19e3`) |
 | SUSE Telco Cloud | 3.7.0 |
 | RKE2 | `v1.36.3+rke2r1` |
 | Rancher Prime | 2.15.1 |

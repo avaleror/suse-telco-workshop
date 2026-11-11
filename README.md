@@ -24,10 +24,10 @@ mkdocs.yml                  # MkDocs Material config
 
 `edition` in `rodeo-plan.yaml` picks the build: `product` (SUSE Linux Micro 6.2, Rancher Prime, the default) or `opensource` (openSUSE Leap Micro 6.2, community Rancher). Neither needs an SCC registration code. See [host setup](docs/instructor/host-setup.md).
 
-These are the commands once `type: suse-telco` exists in rodeo-cli:
+Build it with these commands:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.19.0
+curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.27.0
 git clone https://github.com/avaleror/suse-telco-workshop.git
 cd suse-telco-workshop
 rodeo doctor
@@ -35,11 +35,11 @@ rodeo up                  # bare metal host
 # AWS: rodeo up --target aws
 ```
 
-`install.sh` with no `--ref` tracks `main`. This README names rodeo-cli `v0.19.0` (`cc12c84`, 2 October 2026). The labs have not been run on that tag. `type: suse-telco` is not in that release, so `rodeo up` cannot build this lab today.
+`install.sh` with no `--ref` tracks `main`. This README names rodeo-cli `v0.27.0` (`0da19e3`, 11 November 2026), the first release with `type: suse-telco`. Its engine code is the commit that built this lab on AWS and passed labs 04 through 07 unattended, with both editions.
 
-When the engine exists, `rodeo up` skips `rodeo init`, writes `~/.rodeo/secrets.yaml`, and stops when the site hosts are `available`. You apply `manifests/` yourself. rodeo does not apply that directory. If a later engine starts applying it, the same clusters would be created twice.
+`rodeo up` skips `rodeo init`, writes `~/.rodeo/secrets.yaml`, and stops when the site hosts are `available`. You apply `manifests/` yourself. rodeo does not apply that directory. If a later rodeo version starts applying it, the same clusters would be created twice.
 
-AWS uses this same file: `rodeo up --target aws`. The flag wins over `deployment_target: baremetal`, and rodeo writes `aws` back into your local `rodeo-plan.yaml`. Do not commit that change. On AWS, rodeo seeds the EC2 host from the copy of this plan bundled in rodeo-cli, so the two files are kept identical.
+AWS uses this same file: `rodeo up --target aws`. The flag wins over `deployment_target: baremetal`, and rodeo writes `aws` back into your local `rodeo-plan.yaml`. Do not commit that change. On AWS, rodeo copies this directory's plan files to the EC2 host, so the host builds from your `rodeo-plan.yaml`.
 
 ## Local docs preview
 

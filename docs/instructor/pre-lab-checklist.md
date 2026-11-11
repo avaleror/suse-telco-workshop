@@ -1,6 +1,6 @@
 # Pre-lab checklist
 
-Run this after `rodeo up` finishes and before students open lab 01. The `suse-telco` engine is not in the rodeo-cli tag named in the README, so this list will not pass on `v0.19.0`.
+Run this after `rodeo up` finishes and before students open lab 01.
 
 ## Secrets
 
