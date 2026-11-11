@@ -68,36 +68,18 @@ ansible:
   path: null
   inventory: deployer/inventory.local
 
-telco:
-  # Which guests from definition.yaml become BareMetalHosts, and their labels.
-  # The labels are the hostSelector in manifests/site-co.yaml and the
-  # ClusterClass. rodeo merges these entries over its built-in site-co and
-  # site-ran, so only the changes are listed here.
-  sites:
-    site-co:
-      control_plane_endpoint: "192.168.122.20"
-    site-co-2:
-      namespace: default
-      cluster: site-co-01
-      control_plane_endpoint: "192.168.122.20"
-      labels:
-        cluster-role: control-plane
-        site: site-co
-    site-co-3:
-      namespace: default
-      cluster: site-co-01
-      control_plane_endpoint: "192.168.122.20"
-      labels:
-        cluster-role: control-plane
-        site: site-co
+# The five VMs in definition.yaml and which of them become BareMetalHosts
+# (site-co, site-co-2, site-co-3 for site-co-01, site-ran for site-ran-01) are
+# rodeo-cli's built-in suse-telco layout since v0.28.0. Nothing to set here.
 
-  # The edition picks the base image for mgmt and the downstream image. product
-  # expects /var/lib/libvirt/images/SL-Micro.x86_64-6.2-Base-GM.raw.xz on the KVM
-  # host. To use another file or a URL the host can fetch, uncomment:
-  # base_image:
-  #   path: /var/lib/libvirt/images/SL-Micro.x86_64-6.2-Base-GM.raw.xz
-  #   url: ""
-  #   sha256: ""
+# The edition picks the base image for mgmt and the downstream image. product
+# expects /var/lib/libvirt/images/SL-Micro.x86_64-6.2-Base-GM.raw.xz on the KVM
+# host. To use another file or a URL the host can fetch, uncomment:
+# telco:
+#   base_image:
+#     path: /var/lib/libvirt/images/SL-Micro.x86_64-6.2-Base-GM.raw.xz
+#     url: ""
+#     sha256: ""
 
 # Rancher's self-signed cert on NodePort 30002. No public 80/443.
 rancher_tls:

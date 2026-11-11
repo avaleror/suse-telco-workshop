@@ -7,7 +7,7 @@
 
 `rodeo up` already installed the management stack. This lab is identification, not an install.
 
-In Rancher, and with kubectl on `mgmt`, find each of these:
+In Rancher, and with kubectl in your shell on `mgmt`, find each of these:
 
 - Rancher Prime 2.15.1
 - Rancher Turtles `v0.27.1`, built into Rancher, plus the providers chart `307.0.8+up0.27.0`
@@ -19,8 +19,8 @@ In Rancher, and with kubectl on `mgmt`, find each of these:
 - cert-manager 1.20.1
 
 ```bash
-ssh root@MGMT_IP "kubectl get pods -A"
-ssh root@MGMT_IP "kubectl api-resources | grep -Ei 'cluster|metal3|baremetal|turtles|rke2'"
+kubectl get pods -A
+kubectl api-resources | grep -Ei 'cluster|metal3|baremetal|turtles|rke2'
 ```
 
 !!! note "Open source edition"

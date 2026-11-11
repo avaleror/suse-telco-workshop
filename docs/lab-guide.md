@@ -36,7 +36,15 @@ virsh domifaddr site-co
 virsh domifaddr site-co-2
 virsh domifaddr site-co-3
 virsh domifaddr site-ran
-ssh root@MGMT_IP "kubectl get nodes -o wide && kubectl version"
+```
+
+Open a shell on `mgmt` as root (`ssh root@192.168.122.10` from the KVM host, as root) and fetch the workshop files there. Every `kubectl` and `helm` command from here on runs in that shell, from that directory:
+
+```bash
+curl -fsSL https://github.com/avaleror/suse-telco-workshop/archive/refs/heads/main.tar.gz | tar xz
+cd suse-telco-workshop-main
+kubectl get nodes -o wide
+kubectl version
 ```
 
 Find Rancher, the five guests, sushy, and the image cache. Read the versions on the landing page.
@@ -46,14 +54,14 @@ Find Rancher, the five guests, sushy, and the image cache. Read the versions on 
 No install. `rodeo up` already installed Rancher Prime, Turtles, Cluster API, the RKE2 providers, Metal3, and Ironic.
 
 ```bash
-ssh root@MGMT_IP "kubectl get pods -A"
-ssh root@MGMT_IP "kubectl api-resources | grep -Ei 'cluster|metal3|baremetal|turtles|rke2'"
+kubectl get pods -A
+kubectl api-resources | grep -Ei 'cluster|metal3|baremetal|turtles|rke2'
 ```
 
 ## Lab 3: Enroll site servers (25 min)
 
 ```bash
-ssh root@MGMT_IP "kubectl get baremetalhosts -A -o yaml"
+kubectl get baremetalhosts -A -o yaml
 ```
 
 All four hosts are `available`. The BMC URL uses `redfish-virtualmedia`. A real server keeps the API and changes the address.
@@ -84,12 +92,12 @@ Production RAN sites run the SUSE Linux Micro real-time image on tuned bare meta
 
 ## Lab 6: Site console (20 min)
 
-Label both sites `demo=true` and `site-type=downstream`, then apply `manifests/site-console-gitrepo.yaml` on `mgmt`. NodePort `30080`. The pod is an operations console. Operator language: CNF-side workload.
+Label both sites `demo=true` and `site-type=downstream`, then apply `manifests/site-console-gitrepo.yaml`. NodePort `30080`. The pod is an operations console. Operator language: CNF-side workload.
 
 ```bash
-ssh root@MGMT_IP "kubectl get clusters.fleet.cattle.io -n fleet-default -L demo,site-type"
-ssh root@MGMT_IP "kubectl get gitrepo -n fleet-default"
-ssh root@MGMT_IP "kubectl get bundle -A"
+kubectl get clusters.fleet.cattle.io -n fleet-default -L demo,site-type
+kubectl get gitrepo -n fleet-default
+kubectl get bundle -A
 ```
 
 Check Bundle status. `CLUSTER_NAME` matches `site-co-01` or `site-ran-01`.
@@ -99,6 +107,8 @@ Check Bundle status. `CLUSTER_NAME` matches `site-co-01` or `site-ran-01`.
 On `site-co-01` only. KubeVirt 1.8.3 and CDI 1.65.0 (both chart `307.0.3+up0.8.0`), dashboard extension 1.4.2 (chart `307.0.5+up1.4.2`). SUSE Storage 1.12.1 is already the default class, three replicas, installed with the cluster in lab 4. Then apply VirtualMachine `site-co-guest`. CDI imports the disk. Guide language: Edge Virtualization. Operator language: the VM is a VNF.
 
 ```bash
+kubectl get secret -n default site-co-01-kubeconfig -o jsonpath='{.data.value}' | base64 -d > ~/site-co-01.kubeconfig
+export KUBECONFIG=~/site-co-01.kubeconfig
 kubectl apply -f manifests/kubevirt-vm.yaml
 kubectl get vm,vmi
 ```

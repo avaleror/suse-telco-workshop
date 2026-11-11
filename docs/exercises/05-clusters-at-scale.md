@@ -5,7 +5,7 @@
 
 ---
 
-`site-co-01` is already up from lab 04, written out object by object. A far-edge site is smaller and there are many of them, so an operator stamps them out from a template instead. ClusterClass `example-clusterclass` in namespace `northline` is that template. This lab adds `site-ran-01`, one host.
+`site-co-01` is already up from lab 04, written out object by object. A far-edge site is smaller and there are many of them, so an operator stamps them out from a template instead. ClusterClass `example-clusterclass` in namespace `northline` is that template. This lab adds `site-ran-01`, one host. Run it in your shell on `mgmt`, from the `suse-telco-workshop-main` directory.
 
 ```bash
 kubectl apply -f manifests/clusterclass.yaml

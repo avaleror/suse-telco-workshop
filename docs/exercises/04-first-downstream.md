@@ -22,7 +22,7 @@ A three-node cluster cannot use one host's address for its API. The control plan
 
 This is the layout in the SUSE Telco Cloud 3.7 guide, [Downstream cluster provisioning with Directed network provisioning (multi-node)](https://documentation.suse.com/suse-telco/3.7/html/telco/multi-node.html), with MetalLB as the load balancer. As in that chapter, `RKE2ControlPlane` sets `registrationAddress` to the VIP and carries the `load-balancer-exclusion` annotation, so MetalLB stops sending API traffic to a node while Cluster API drains it. The guide's second MetalLB pool, for Traefik ingress, is left out: the labs reach the sites on NodePorts. `site-ran-01` gets the same MetalLB pattern from its ClusterClass in lab 05.
 
-Apply it from this repo and watch Turtles import the cluster:
+In your shell on `mgmt`, from the `suse-telco-workshop-main` directory (lab 01), apply it and watch Turtles import the cluster:
 
 ```bash
 kubectl apply -f manifests/site-co.yaml

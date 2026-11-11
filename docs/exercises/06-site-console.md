@@ -11,15 +11,15 @@ Fleet delivers it. The GitRepo targets clusters labelled `demo=true` and `site-t
 
 ## Label the sites
 
-The imported clusters carry no labels yet. Fleet reads them from the Rancher cluster objects, and those have generated IDs (`c-xxxxx`), so look each one up by its display name. You can also add the labels in the Rancher UI, under Cluster Management, Edit Config.
+The imported clusters carry no labels yet. Fleet reads them from the Rancher cluster objects, and those have generated IDs (`c-xxxxx`), so look each one up by its display name. Run this in your shell on `mgmt`. You can also add the labels in the Rancher UI, under Cluster Management, Edit Config.
 
 ```bash
-ssh root@MGMT_IP 'for c in site-co-01 site-ran-01; do
+for c in site-co-01 site-ran-01; do
   id=$(kubectl get clusters.management.cattle.io \
     -o jsonpath="{.items[?(@.spec.displayName==\"$c\")].metadata.name}")
   kubectl label clusters.management.cattle.io "$id" demo=true site-type=downstream --overwrite
-done'
-ssh root@MGMT_IP "kubectl get clusters.fleet.cattle.io -n fleet-default -L demo,site-type"
+done
+kubectl get clusters.fleet.cattle.io -n fleet-default -L demo,site-type
 ```
 
 Both sites should show `true` and `downstream`. Rancher copies the labels to the Fleet clusters within a few seconds.
@@ -27,10 +27,9 @@ Both sites should show `true` and `downstream`. Rancher copies the labels to the
 ## Deliver the console
 
 ```bash
-scp manifests/site-console-gitrepo.yaml root@MGMT_IP:
-ssh root@MGMT_IP "kubectl apply -f site-console-gitrepo.yaml"
-ssh root@MGMT_IP "kubectl get gitrepo -n fleet-default"
-ssh root@MGMT_IP "kubectl get bundle -n fleet-default"
+kubectl apply -f manifests/site-console-gitrepo.yaml
+kubectl get gitrepo -n fleet-default
+kubectl get bundle -n fleet-default
 ```
 
 The GitRepo points at Gitea on `mgmt`: `http://192.168.122.10:3000/gitea/telco-site-console.git`. rodeo copied `https://github.com/avaleror/telco-site-console.git`, the `fleet_repo` value in `rodeo-plan.yaml`, into that Gitea when it built the lab. Fleet never goes to GitHub. You can browse the repo at `http://192.168.122.10:3000/gitea/telco-site-console` from the KVM host.

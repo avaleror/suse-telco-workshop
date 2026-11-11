@@ -8,8 +8,8 @@
 `rodeo up` registers four `BareMetalHost` objects and waits until they are `available`. You do not enroll them by hand. You read the objects and see what a real server would change.
 
 ```bash
-ssh root@MGMT_IP "kubectl get baremetalhosts -A"
-ssh root@MGMT_IP "kubectl get baremetalhosts -A -o yaml"
+kubectl get baremetalhosts -A
+kubectl get baremetalhosts -A -o yaml
 ```
 
 Check three fields on each host:
