@@ -72,10 +72,10 @@ On `--target aws` the copy does not work: rodeo creates the instance in the same
 `install.sh` on `main` tracks main. Pin the tag this README names:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.28.0
+curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.28.1
 ```
 
-`v0.28.0` is commit `db583de` (11 November 2026). Its engine code is the same as `v0.27.0` (`0da19e3`), the first release with `type: suse-telco`, which passed the full lab run with both editions. `v0.28.0` only makes the five-VM layout the built-in default, and that layout passed on 2026-11-11. Replace that ref only after a full lab run names the commit you actually tested.
+`v0.28.1` is commit `9f616b6` (11 November 2026). Its engine code is the same as `v0.27.0` (`0da19e3`), the first release with `type: suse-telco`, which passed the full lab run with both editions. `v0.28.0` made the five-VM layout the built-in default, and that layout passed on 2026-11-11. `v0.28.1` only fixes a crash when a plan has an empty `telco:` block. Replace that ref only after a full lab run names the commit you actually tested.
 
 ```bash
 git clone https://github.com/avaleror/suse-telco-workshop.git
