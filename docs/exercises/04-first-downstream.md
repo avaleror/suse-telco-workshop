@@ -26,6 +26,9 @@ In Rancher, `site-co-01` should show up because of the auto-import label. This w
 
 The host is `site-co`. Lab 07 needs nested virt on that guest. You do not start the VM in this lab.
 
+!!! warning "Starting over"
+    Delete the Cluster object only: `kubectl delete cluster -n default site-co-01`. Cluster API removes the machines and releases the host. `kubectl delete -f manifests/downstream-single.yaml` also deletes the Metal3MachineTemplate while the cluster is still going away, and the RKE2 control plane deletion hangs.
+
 ---
 
 **Next:** [Exercise 5: Clusters at scale](05-clusters-at-scale.md)

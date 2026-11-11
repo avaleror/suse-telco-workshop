@@ -65,7 +65,7 @@ kubectl apply -f manifests/downstream-single.yaml
 kubectl get clusters -A
 ```
 
-Watch Turtles import `site-co-01`.
+Watch Turtles import `site-co-01`. To start over, delete only the Cluster: `kubectl delete cluster -n default site-co-01`. Deleting the whole file hangs the RKE2 control plane deletion.
 
 ## Lab 5: Clusters at scale (30 min)
 
@@ -76,6 +76,8 @@ kubectl apply -f manifests/clusterclass.yaml
 kubectl apply -f manifests/site-ran.yaml
 kubectl get clusters -A
 ```
+
+Production RAN sites run the SUSE Linux Micro real-time image on tuned bare metal. This lab uses the standard image: the sites are nested VMs.
 
 ## Lab 6: Site console (20 min)
 

@@ -30,7 +30,7 @@ Correct the host bar after the first real run. The 32 GB metal3-demo host is a s
 
 Say this to the room: the EC2 box was rented by rodeo, and every server Metal3 touched was a libvirt guest with a fake Redfish BMC. There is no Cluster API Provider AWS in the Telco Cloud stack.
 
-Tested size: `m8id.4xlarge` in `eu-north-1` ran labs 01 through 07 on 2026-11-10 with the `opensource` edition. Nested KubeVirt worked on that virtual instance: the lab 07 guest ran with KVM acceleration. No metal size is needed.
+Tested size: `m8id.4xlarge` in `eu-north-1` ran labs 01 through 07 with both editions, `opensource` on 2026-11-10 and `product` on 2026-11-11. Nested KubeVirt worked on that virtual instance: the lab 07 guest ran with KVM acceleration. No metal size is needed.
 
 Credentials stay in `~/.aws/credentials` or the environment. Do not put them in `rodeo-plan.yaml`.
 
@@ -57,7 +57,7 @@ Tear-down is `sudo rodeo clean --yes`.
 | Base image | you stage it once (SUSE login) | rodeo downloads it, checksum pinned |
 | SCC registration code | optional | not used |
 
-Neither edition needs an SCC code. The only package added to the downstream image is `jq`, and Edge Image Builder installs it from a public repository: SLE BCI 16.0 for `product`, openSUSE Leap 16.0 for `opensource`. In `product`, an `scc_registration_code` in `~/.rodeo/secrets.yaml` (and uncommented in the plan) switches that to SUSE's own repositories.
+Neither edition needs an SCC code. The packages added to the downstream image are `jq` and `open-iscsi` (SUSE Storage needs it in lab 07), and Edge Image Builder installs them from a public repository: SLE BCI 16.0 for `product`, openSUSE Leap 16.0 for `opensource`. In `product`, an `scc_registration_code` in `~/.rodeo/secrets.yaml` (and uncommented in the plan) switches that to SUSE's own repositories.
 
 ## Stage the SL Micro base image (product only)
 
@@ -68,6 +68,8 @@ sudo cp SL-Micro.x86_64-6.2-Base-GM.raw.xz /var/lib/libvirt/images/
 ```
 
 Or set `telco.base_image.url` in `rodeo-plan.yaml` to a location the host can fetch, and `telco.base_image.sha256` to have rodeo check it. The `opensource` edition skips this step.
+
+On `--target aws` the copy does not work: rodeo creates the instance in the same run, and it mounts the instance NVMe over `/var/lib/libvirt/images`. Use `telco.base_image.url` there, with a URL the instance can fetch, for example a presigned link to a private S3 object in the same region. Do not publish the image: it is SUSE content behind a login.
 
 ## Install rodeo-cli
 
