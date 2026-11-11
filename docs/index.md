@@ -55,7 +55,7 @@ Each VM gets a fixed DHCP reservation on `192.168.122.0/24`, libvirt network `de
 AWS first. Bare metal second. The labs are the same pages. The split is where the KVM host comes from.
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.27.0
+curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.28.0
 git clone https://github.com/avaleror/suse-telco-workshop.git
 cd suse-telco-workshop
 rodeo doctor
@@ -63,7 +63,7 @@ rodeo up                  # bare metal host
 # AWS: rodeo up --target aws
 ```
 
-`v0.27.0` (`0da19e3`) is the first rodeo-cli release with `type: suse-telco`. Check the [hardware requirements](reference/architecture.md#hardware-requirements) first. Details are in the [README](https://github.com/avaleror/suse-telco-workshop) and [host setup](instructor/host-setup.md).
+`v0.28.0` (`db583de`) has the five-VM layout as its built-in default. `v0.27.0` was the first rodeo-cli release with `type: suse-telco`. Check the [hardware requirements](reference/architecture.md#hardware-requirements) first. Details are in the [README](https://github.com/avaleror/suse-telco-workshop) and [host setup](instructor/host-setup.md).
 
 ## Exercises
 

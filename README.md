@@ -28,7 +28,7 @@ mkdocs.yml                  # MkDocs Material config
 Build it with these commands:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.27.0
+curl -fsSL https://raw.githubusercontent.com/avaleror/rodeo-cli/main/install.sh | bash -s -- --ref v0.28.0
 git clone https://github.com/avaleror/suse-telco-workshop.git
 cd suse-telco-workshop
 rodeo doctor
@@ -36,7 +36,7 @@ rodeo up                  # bare metal host
 # AWS: rodeo up --target aws
 ```
 
-`install.sh` with no `--ref` tracks `main`. This README names rodeo-cli `v0.27.0` (`0da19e3`, 11 November 2026), the first release with `type: suse-telco`. Its engine code is the commit that built this lab on AWS and passed labs 04 through 07 unattended, with both editions.
+`install.sh` with no `--ref` tracks `main`. This README names rodeo-cli `v0.28.0` (`db583de`, 11 November 2026). Its engine code is the same as `v0.27.0` (`0da19e3`), the first release with `type: suse-telco`, which built this lab on AWS and passed labs 04 through 07 unattended, with both editions. `v0.28.0` makes the five-VM layout, `site-co-01` on three hosts, the built-in default. That layout passed on 2026-11-11.
 
 `rodeo up` skips `rodeo init`, writes `~/.rodeo/secrets.yaml`, and stops when the site hosts are `available`. You apply `manifests/` yourself. rodeo does not apply that directory. If a later rodeo version starts applying it, the same clusters would be created twice.
 
