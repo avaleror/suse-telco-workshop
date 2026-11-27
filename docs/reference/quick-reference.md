@@ -65,4 +65,4 @@ sudo rodeo clean --yes
 | KubeVirt / CDI | 1.8.3 / 1.65.0 |
 | telco-examples | `e4ec0b0` on `release-3.7` |
 
-Password: `~/.rodeo/secrets.yaml` on the KVM host. No SCC code is needed; an optional one (product edition) goes in that file too.
+Password: **Credentials** in the lab page in a workshop, or `~/.rodeo/secrets.yaml` on the KVM host of a lab you deployed. No SCC code is needed; an optional one (product edition) goes in that file too.

@@ -38,7 +38,7 @@ virsh domifaddr site-co-3
 virsh domifaddr site-ran
 ```
 
-Open a shell on `mgmt` as root (`ssh root@192.168.122.10` from the KVM host, as root) and fetch the workshop files there. Every `kubectl` and `helm` command from here on runs in that shell, from that directory:
+Open a shell on `mgmt` as root (`ssh root@192.168.122.10` from the KVM host; in a workshop, from the lab page's Terminal tab) and fetch the workshop files there. Every `kubectl` and `helm` command from here on runs in that shell, from that directory:
 
 ```bash
 curl -fsSL https://github.com/avaleror/suse-telco-workshop/archive/refs/heads/main.tar.gz | tar xz
