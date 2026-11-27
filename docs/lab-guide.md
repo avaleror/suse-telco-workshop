@@ -11,7 +11,7 @@ Northline is a regional mobile network. One management cluster covers the region
 
 This guide uses the product names (`edition: product`). With `edition: opensource` read Rancher for Rancher Prime and openSUSE Leap Micro 6.2 for SUSE Linux Micro 6.2; everything else is the same.
 
-The KVM host is already up when class starts. libvirt network `default`, bridge `virbr0`, subnet `192.168.122.0/24`. VMs: `mgmt` (.10), `site-co` (.21), `site-co-2` (.23), `site-co-3` (.24), `site-ran` (.32). The admin password is in `~/.rodeo/secrets.yaml`.
+The KVM host is already up when class starts. libvirt network `default`, bridge `virbr0`, subnet `192.168.122.0/24`. VMs: `mgmt` (.10), `site-co` (.21), `site-co-2` (.23), `site-co-3` (.24), `site-ran` (.32). The admin password is under **Credentials** in the lab player, or in `~/.rodeo/secrets.yaml` on your own host.
 
 `manifests/` is the student YAML, and rodeo does not apply it. Lab 04 applies `site-co-01`, lab 05 applies ClusterClass `example-clusterclass` and `site-ran-01`, and lab 07 applies VirtualMachine `site-co-guest` on `site-co-01`.
 
@@ -38,7 +38,7 @@ virsh domifaddr site-co-3
 virsh domifaddr site-ran
 ```
 
-Open a shell on `mgmt` as root (`ssh root@192.168.122.10` from the KVM host, as root) and fetch the workshop files there. Every `kubectl` and `helm` command from here on runs in that shell, from that directory:
+Open a shell on `mgmt` as root (`ssh root@192.168.122.10` from the KVM host terminal; on your own host, as root) and fetch the workshop files there. Every `kubectl` and `helm` command from here on runs in that shell, from that directory:
 
 ```bash
 curl -fsSL https://github.com/avaleror/suse-telco-workshop/archive/refs/heads/main.tar.gz | tar xz

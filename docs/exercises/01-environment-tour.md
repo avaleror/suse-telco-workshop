@@ -22,13 +22,13 @@ virsh domifaddr site-co-3
 virsh domifaddr site-ran
 ```
 
-`rodeo up` should already show `mgmt` running, with the four site hosts present as the machines Metal3 will enroll: three for `site-co-01` and one for `site-ran-01`. Read the Rancher URL from the success screen. The admin password is in `~/.rodeo/secrets.yaml` on the KVM host. Rancher uses its own self-signed certificate (`rancher_tls.source: rancher`), on a NodePort. You do not need a public listener on port 80 or 443.
+`rodeo up` should already show `mgmt` running, with the four site hosts present as the machines Metal3 will enroll: three for `site-co-01` and one for `site-ran-01`. Rancher is the **SUSE Rancher Prime** tab in the lab player, and its admin password is under **Credentials**. On your own host, read the Rancher URL from the success screen and the password from `~/.rodeo/secrets.yaml`. Rancher uses its own self-signed certificate (`rancher_tls.source: rancher`), on a NodePort. You do not need a public listener on port 80 or 443.
 
 ## Your shell on mgmt
 
 Every `kubectl` and `helm` command in labs 01 through 07 runs on the management VM, `mgmt`, as root. rodeo installed both there and gave root a kubeconfig for the management cluster, so there is nothing to configure.
 
-From the KVM host, as root (run `sudo -i` first if you logged in as another user):
+From the KVM host terminal (the lab player's terminal already has a key mgmt accepts; on your own host, run it as root):
 
 ```bash
 ssh root@192.168.122.10
