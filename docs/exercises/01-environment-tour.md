@@ -28,7 +28,9 @@ virsh domifaddr site-ran
 
 Every `kubectl` and `helm` command in labs 01 through 07 runs on the management VM, `mgmt`, as root. rodeo installed both there and gave root a kubeconfig for the management cluster, so there is nothing to configure.
 
-From the KVM host, as root (run `sudo -i` first if you logged in as another user):
+From the KVM host:
+
+> **In a workshop** the KVM host is the **Terminal** tab of your lab page. You are `student`, not root: `virsh` works and `ssh root@192.168.122.10` logs in with your own key. On a lab you deployed yourself, run the host commands as root.
 
 ```bash
 ssh root@192.168.122.10
@@ -43,7 +45,7 @@ kubectl get nodes -o wide
 kubectl version
 ```
 
-`virsh` commands, like the ones above, run on the KVM host, not on `mgmt`. Keep a second terminal on the host for them.
+`virsh` commands, like the ones above, run on the KVM host, not on `mgmt`. Keep a second terminal on the host for them, or leave `mgmt` with `exit` and come back with `ssh root@192.168.122.10`.
 
 Read the versions from `kubectl version` against the [landing page table](../index.md).
 
